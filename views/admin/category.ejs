@@ -1,0 +1,237 @@
+<%- include ('../layouts/adminHeader.ejs') %>
+
+  <div class="layout-page">
+    <nav class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme"
+      id="layout-navbar">
+      <div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none">
+        <a class="nav-item nav-link px-0 me-xl-4" href="javascript:void(0)">
+          <i class="bx bx-menu bx-sm"></i>
+        </a>
+      </div>
+      <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
+        <!-- Search -->
+        <div class="navbar-nav align-items-center">
+          <form>
+            <div class="nav-item d-flex align-items-center">
+              <button style="border: 0; background-color: rgb(255, 255, 255);" type="submit"><i
+                  class="bx bx-search fs-4 lh-0"></i></button>
+              <input type="text" name="search" class="form-control border-0 shadow-none" placeholder="Search..."
+                aria-label="Search..." value="<%-val%>" />
+            </div>
+          </form>
+        </div>
+      </div>
+    </nav>
+    <% if(typeof message !=='undefined' ) { %>
+      <script>setTimeout(() => document.getElementById("addb").click(), 100)</script>
+      <%} %>
+
+        <div class="page-wrapper">
+          <div class="content-wrapper">
+            <div class="container-xxl flex-grow-1 container-p-y">
+              <div class="card">
+                <div class="card">
+                  <div class="card-body">
+                    <h4 class="card-title">Categories</h4>
+                    <div class="table-responsive">
+                      <table class="table table-hover" style="table-layout: fixed;">
+                        <thead>
+                          <tr>
+                            <th scope="col">SI NO</th>
+                            <th>Category ID</th>
+                            <th scope="col">Category Name</th>
+                            <th >List/Unlist</th>
+                            <th scope="col">Actions</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <% if( category.length> 0){ %>
+                            <% for(let i=1;i <=category.length; i++){ %>
+                              <tr>
+                                <td scope="row">
+                                  <%= i %>
+                                </td>
+                                <td style="font-size: x-small;">
+                                  <%= category[i-1]._id %>
+                                </td>
+                                <td>
+                                  <%= category[i-1].name %>
+                                </td>
+                                <td>  
+
+                                  <div class="form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault" onchange="return listCat('<%= category[i-1]._id %>')" <% if(category[i-1].isAvailable){ %>checked<%}%> />
+                                    <label class="form-check-label" for="flexSwitchCheckDefault">
+                                    </label>
+                                  </div>
+                                </td>
+                                <td>
+ 
+                                <a href="#" id='<%= category[i-1]._id %>' class="btn btn-primary a-btn-slide-text btn-sm" onclick="edit('<%= category[i-1]._id %>','<%= category[i-1].name %>')" <% if( category[i-1].isAvailable == 0){%>disabled<%}%>>
+
+                                    <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                                    <span><strong>Edit</strong></span>            
+                                </a>
+                                <a href="/admin/deleteCategory?id=<%= category[i-1]._id %>"  class="btn btn-primary a-btn-slide-text btn-sm" <% if( category[i-1].isAvailable == 0){%>disabled<%}%>>
+
+                                  <span class="glyphicon glyphicon-delete" aria-hidden="true"></span>
+                                  <span><strong>Delete</strong></span>            
+                              </a>
+
+                              
+                                  
+                                </td>
+                              </tr>
+                              <% }} else { %>
+                                <tr>
+                                  <td colspan="5">Category Not Found</td>
+                                </tr>
+                                <% } %>
+
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="buy-now">
+          <button id="addb" class="btn btn-danger btn-buy-now">
+            <span><strong>  ADD CATEGORY</strong></span></button>
+        </div>
+        <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous" !important> -->
+
+<script>
+  let msg =''
+  $('#addb').on('click', function() {
+    bootbox.prompt({
+    title: 'Add Category',
+    centerVertical: true,
+    inputType: 'text',
+    message :'Enter Category name <p style="color:red" >'+msg+'</p>',
+    callback: function (result) {
+    msg = ''  
+    if(result){   
+      const data = {name: result,edit:0}
+  axios.post('/admin/category', data)
+    .then(res => {
+      if(res.data.state){
+        console.log(res.data.state);
+        let dialog = bootbox.dialog({
+        message: '<p class="text-center mb-0 text-success">Category Added Successfully...!</p>',
+        backdrop:true,closeButton: false
+        });
+        msg =''
+        dialog.init(setTimeout(()=> dialog.modal('hide'), 2000))
+      }else{
+        msg = "Category Already Exists..!"
+        document.getElementById('addb').click()}
+    })
+    .catch(error => {
+      console.log(error);
+    })}
+    },
+})               
+})
+ function edit(cId , name) {
+    bootbox.prompt({
+    title: 'Edit Category',
+    centerVertical: true,
+    inputType: 'text',
+    value:name,
+    message :'Enter Category name <p style="color:red" >'+msg+'</p>',
+    callback: function (result) {
+    msg = ''  
+    if(result){   
+      const data = {name: result,edit:1,id:cId}
+  axios.post('/admin/category', data)
+    .then(res => {
+      if(res.data.state){
+        console.log(res.data.state);
+        let dialog = bootbox.dialog({
+        message: '<p class="text-center mb-0 text-success">Category saved Successfully...!</p>',
+        backdrop:true,closeButton: false
+        });
+        msg =''
+        dialog.init(setTimeout(()=> dialog.modal('hide'), 2000))
+      }else{
+        msg = "Category Already Exists..!"
+        document.getElementById(cId).click()}
+    })
+    .catch(error => {
+      console.log(error);
+    })}
+    },
+})               
+}
+function listCat(param) {
+  console.log(param);
+  data = { id:param}
+  axios.post('/admin/listCategory', data)
+    .then(res => {
+      if(res.data.state){   
+        mesg ='<p class="text-center mb-0 text-success">Category Listed Successfully...!</p>'
+      }else{
+        mesg ='<p class="text-center mb-0 text-danger">Category Unlisted Successfully...!</p>'
+      }
+      let dialog = bootbox.dialog({ message: mesg , backdrop:true,closeButton: false});
+         dialog.init(setTimeout(()=> dialog.modal('hide'), 2000))
+  })
+    .catch(error => {
+      console.log(error);
+    })
+}
+
+</script>
+      <!-- <script>
+        function send(e){
+          let searchResults =document.getElementById('searchResults')
+          fetch('category', {
+            method: 'POST',
+            headers:{'Content-Type':'application/json'},
+            body: JSON.stringify({payload:e.value})
+          }).then(res => res.json()).then(data=>{
+            let payload = data.payload;
+            searchResults.innerHTML = '';
+            if(payload.length < 1){
+              searchResults.innerHTML = '<p>sorry nothing found </p>';
+            }
+          })
+        }
+        function edit(id) {
+          e_id = id
+        }
+function sen(val){
+  $.ajax({
+      url:'http://localhost:3000/admin/name',
+      data:$("#submit-form").serialize(),
+      method:"post",
+      success:function (response){
+          alert("Form submitted successfully !!")
+      },
+      error:function (err){
+          alert("Something went Wrong")
+      }
+   })
+}
+function send(productId, qty) {
+  let searchResults =document.getElementById('search').value
+  console.log(searchResults);
+        $.ajax({
+          url: '/category',
+          type: 'POST',
+          data: { search:searchResults },
+          success: function(data) {
+            // update subtotal and grand total
+            console.log(data);
+            $('#searchResult').text(data.subtotal);
+          },
+          error: function(jqXHR, textStatus, errorThrown) {
+            console.log(textStatus, errorThrown);
+          }
+        });
+      }
+       </script>   -->
+        <%- include ('../layouts/adminFooter.ejs') %>

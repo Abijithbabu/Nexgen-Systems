@@ -1,0 +1,335 @@
+<%- include('../layouts/header.ejs') %>
+
+    <!--====== Main App ======-->
+    <div id="app" class="bg-white">
+
+
+        <!--====== App Content ======-->
+        <div class="app-content">
+
+            <!--====== Section 1 ======-->
+            <div class="u-s-p-y-90">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-3 col-md-12">
+                            <div class="shop-w-master">
+                                <h1 class="shop-w-master__heading u-s-m-b-30"><i class="fas fa-filter u-s-m-r-8"></i>
+
+                                    <span>FILTERS</span></h1>
+                                <div class="shop-w-master__sidebar">
+                                    <div class="u-s-m-b-30">
+                                        <div class="shop-w shop-w--style">
+                                            <div class="shop-w__intro-wrap">
+                                                <h1 class="shop-w__h">CATEGORY</h1>
+
+                                                <span class="fas fa-minus shop-w__toggle" data-target="#s-category" data-toggle="collapse"></span>
+                                            </div>
+                                            <div class="shop-w__wrap collapse show" id="s-category">
+                                                <ul class="shop-w__category-list gl-scroll">
+                                                    <% for(i=0;i<category.length;i++){%>
+                                                    <li class="has-list">
+                                                        <input type="checkbox" value="<%-i%>" onchange="update()" on name="category" class="category" <% for(j=0; j< selected.length; j++) { if(selected[j] == i) { %>checked<%}}%>>&nbsp;&nbsp;<%-category[i].name %>
+                                                    </li>
+                                                    <%}%>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="u-s-m-b-30">
+                                        <div class="shop-w shop-w--style">
+                                            <div class="shop-w__intro-wrap">
+                                                <h1 class="shop-w__h">RATING</h1>
+
+                                                <span class="fas fa-minus shop-w__toggle" data-target="#s-rating" data-toggle="collapse"></span>
+                                            </div>
+                                            <div class="shop-w__wrap collapse show" id="s-rating">
+                                                <ul class="shop-w__list gl-scroll">
+                                                    <li>
+                                                        <div class="rating__check">
+
+                                                            <input type="checkbox" class="rating" value="5" onchange="update()">
+                                                            <div class="rating__check-star-wrap"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                                                        </div>
+
+                                                        <span class="shop-w__total-text">(2)</span>
+                                                    </li>
+                                                    <li>
+                                                        <div class="rating__check">
+
+                                                            <input type="checkbox" class="rating" value="4" onchange="update()">
+                                                            <div class="rating__check-star-wrap"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i>
+
+                                                                <span>& Up</span></div>
+                                                        </div>
+
+                                                        <span class="shop-w__total-text">(8)</span>
+                                                    </li>
+                                                    <li>
+                                                        <div class="rating__check">
+
+                                                            <input type="checkbox" class="rating" value="3" onchange="update()">
+                                                            <div class="rating__check-star-wrap"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i>
+
+                                                                <span>& Up</span></div>
+                                                        </div>
+
+                                                        <span class="shop-w__total-text">(10)</span>
+                                                    </li>
+                                                    <li>
+                                                        <div class="rating__check">
+
+                                                            <input type="checkbox" class="rating" value="2" onchange="update()">
+                                                            <div class="rating__check-star-wrap"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i>
+
+                                                                <span>& Up</span></div>
+                                                        </div>
+
+                                                        <span class="shop-w__total-text">(12)</span>
+                                                    </li>
+                                                    <li>
+                                                        <div class="rating__check">
+
+                                                            <input type="checkbox" class="rating" value="1" onchange="update()">
+                                                            <div class="rating__check-star-wrap"><i class="fas fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i>
+
+                                                                <span>& Up</span></div>
+                                                        </div>
+
+                                                        <span class="shop-w__total-text">(1)</span>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                
+                                    <div class="u-s-m-b-30">
+                                        <div class="shop-w shop-w--style">
+                                            <div class="shop-w__intro-wrap">
+                                                <h1 class="shop-w__h">PRICE</h1>
+
+                                                <span class="fas fa-minus shop-w__toggle" data-target="#s-price" data-toggle="collapse"></span>
+                                            </div>
+                                            <div class="shop-w__wrap collapse show" id="s-price">
+                                                <form class="shop-w__form-p">
+                                                    <div class="shop-w__form-p-wrap">
+                                                        <div>
+
+                                                            <label for="price-min"></label>
+
+                                                            <input class="input-text input-text--primary-style" type="text" id="price-min" placeholder="Min"></div>
+                                                        <div>
+
+                                                            <label for="price-max"></label>
+
+                                                            <input class="input-text input-text--primary-style" type="text" id="price-max" placeholder="Max"></div>
+                                                        <div>
+
+                                                            <button class="btn btn--icon fas fa-angle-right btn--e-transparent-platinum-b-2" type="submit"></button></div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                   
+                                    
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-9 col-md-12">
+                            <div class="shop-p">
+                                <div class="shop-p__toolbar u-s-m-b-30">
+                                   
+                                    <div class="shop-p__tool-style">
+                                        <!-- <div class="tool-style__group u-s-m-b-8">
+
+                                            <span class="js-shop-grid-target is-active">Grid</span>
+
+                                            <span class="js-shop-list-target">List</span></div> -->
+                                            <div class="tool-style__form-wrap">
+                                                <div class="u-s-m-b-8"><select class="select-box bg-white select-box--transparent-b-2" name="limit" id="limit" onchange="update()">
+                                                        <option value="15"<% if(limit == 15) { %>selected<%}%>>Show: All</option>
+                                                        <option value="6" <% if(limit == 6)  { %>selected<%}%>>Show: 6</option>
+                                                        <option value="9" <% if(limit == 9)  { %>selected<%}%>>Show: 9</option>
+                                                        <option value="12"<% if(limit == 12) { %>selected<%}%>>Show: 12</option>
+                                                    </select></div>
+                                                <div class="u-s-m-b-8"><select class="select-box bg-white select-box--transparent-b-2" name="sort" id="sort" onchange="update()">
+                                                        <option value="0" <% if(order == 0) { %>selected<%}%> >Sort By: Latest Arrivals</option>
+                                                        <option value="1" <% if(order == 1) { %>selected<%}%> >Sort By: Lowest Price</option>
+                                                        <option value="-1"<% if(order ==-1) { %>selected<%}%> >Sort By: Highest Price</option>
+                                                    </select></div>
+                                            </div>
+                                            <label for="main-search"></label>
+                                            <input class="input-text input-text--border-radius input-text--style-1" type="text" id="search" value="<%-val%>" name="search" placeholder="Search" onkeyup="update()">
+                
+                                    </div>
+                                </div>
+                                <div class="shop-p__collection">
+                                    <div class="row is-grid-active" id="products">
+                                        <% for(i=0;i<products.length;i++){%>
+                                        <div class="col-lg-4 col-md-6 col-sm-6">
+                                            <div class="product-m">
+                                                <div class="product-m__thumb">
+                 
+                                                    <a class="aspect aspect--bg-grey aspect--square u-d-block" href="/productDetail?id=<%-products[i]._id%>">
+
+                                                        <img class="aspect__img" src="/uploads/<%-products[i].image[0]%>" alt=""></a>
+                                                    <div class="product-m__quick-look">
+                                                           
+                                                        <a class="fa fa-heart" data-modal="modal" data-modal-id="#quick-look"  href="/addToWishList?id=<%=products[i]._id%>" data-tooltip="tooltip" data-placement="top" title="Add to wishlist"></a></div>
+                                                    <div class="product-m__add-cart">
+
+                                                        <a class="btn--e-brand" data-modal="modal" data-modal-id="#add-to-cart" href="/addToCart?id=<%=products[i]._id%>" id="/makd">Add to Cart</a></div>
+                                                </div>
+                                                <div class="product-m__content">
+                                                    <div class="product-m__category">
+
+                                                        <a href="/productDetail?id=<%-products[i]._id%>"><%-products[i].name%></a></div>
+                                                    <div class="product-m__name">
+
+                                                        <a href="product-detail.html"><%-products[i].category%></a></div>
+                                                    <div class="product-m__rating gl-rating-style"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i><i class="far fa-star"></i><i class="far fa-star"></i>
+
+                                                        <span class="product-m__review">(23)</span></div>
+                                                    <div  class="product-m__price">₹ <%-products[i].price%>.00</div>
+                                                    <!-- <div class="product-m__hover">
+                                                        <div class="product-m__preview-description">
+
+                                                            <span><%-products[i].description %></span></div>
+                                                        <div class="product-m__wishlist">
+
+                                                            <a class="far fa-heart" href="#" data-tooltip="tooltip" data-placement  ="top" title="Add to Wishlist"></a></div>
+                                                    </div> -->
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <%}%> 
+
+                                    </div>    
+                                </div>
+                                <div class="u-s-p-y-60" id="pagnation">
+
+                                    <% if(pageCount > 1){ %>
+                                        <ul class="shop-p__pagination">
+                                        <% for(i=0;i<pageCount;i++){%>    
+                                            <li class="pagnation <% if(page == i){ %>is-active<%}%>" id="<%-i%>" >
+    
+                                                <a class="<% if(page != i){ %>text-white<%}else{%>text-danger<%}%>"  onclick="updatePage('<%-i%>')"><%-i+1%></a></li>
+                                        <% }%>
+                                        </ul>
+                                    <%}%>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>                                  
+    </div>
+    <script src="js/vendor.js"></script>
+    <script src="js/jquery.shopnav.js"></script>
+    <script src="js/app.js"></script>
+
+      
+      <script>
+        let page = 0
+                function updatePage(pg=0){
+                    page = pg
+                    console.log(page);
+                    pageNo=document.getElementsByClassName('pagnation')
+                    for(let key of pageNo){key.classList.remove('is-active')}
+                    document.getElementById(page).classList.add('is-active')
+                    update()
+                }
+        function update(){
+            var elements = document.getElementsByClassName("category");
+            var limit = document.getElementById('limit').value
+            var sort = document.getElementById('sort').value
+            var search = document.getElementById('search').value
+            var rating = document.getElementsByClassName('rating')
+            var rt =''
+            for(var i = 0; i < rating.length; i++) {
+    if(rating[i].checked){
+          rt = [...rt,rating[i].value] 
+    }}
+ min = Math.min(...rt);
+ const safeMin = isFinite(min) ? min : 0;
+console.log(safeMin,typeof(safeMin));
+console.log(rt);
+var arr = '';
+for(var i = 0; i < elements.length; i++) {
+    if(elements[i].checked){
+          arr = [...arr,elements[i].value] 
+    }}
+            console.log(arr+'\n'+limit+'\n'+sort+'\n'+search+'\n'+page);
+            console.log('called');
+          $.ajax({
+            url: '/products',
+            type: 'GET',
+            data:{category:arr , limit:limit,sort:sort,search:search,page:page,rating:safeMin ,ajax:true},
+            success: function(data) {
+              console.log(data);
+              if(data.pageCount ==1){
+        document.getElementById('pagnation').style.display='none';
+              }else{
+                document.getElementById('pagnation').style.display='block';
+        }
+        products = data.products
+        document.getElementById('products').innerHTML = `
+    ${products.map(product => `
+        <div class="col-lg-4 col-md-6 col-sm-6">
+            <div class="product-m">
+                <div class="product-m__thumb">
+                    <a class="aspect aspect--bg-grey aspect--square u-d-block" href="/productDetail?id=${product._id}">
+                        <img class="aspect__img" src="/uploads/${product.image[0]}" alt="">
+                    </a>
+                    <div class="product-m__quick-look">
+                        <a class="fas fa-heart" data-modal="modal" data-modal-id="#quick-look"  href="/addToWishList?id=${product._id}" data-tooltip="tooltip" data-placement="top" title="Add to wishlist"></a>
+                    </div>
+                    <div class="product-m__add-cart">
+                        <a class="btn--e-brand" data-modal="modal" data-modal-id="#add-to-cart" href="/addToCart?id=${product._id}" id="/makd">Add to Cart</a>
+                    </div>
+                </div>
+                <div class="product-m__content">
+                    <div class="product-m__category">
+                        <a href="/productDetail?id=${product._id}">${product.name}</a>
+                    </div>
+                    <div class="product-m__name">
+                        <a href="product-detail.html">${product.category}</a>
+                    </div>
+                    <div class="product-m__rating gl-rating-style">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i><i class="far fa-star"></i><i class="far fa-star"></i>
+                        <span class="product-m__review">(23)</span>
+                    </div>
+                    <div class="product-m__price">₹.${product.price}.00</div>
+                </div>
+            </div>
+        </div>
+    `).join('')}
+`;           
+if (data.pageCount > 1) {
+    document.getElementById('pagnation').innerHTML  = `
+    <ul class="shop-p__pagination">
+      ${Array.from({ length: data.pageCount }).map((_, i) => `
+        <li class="pagnation ${page == i ? 'is-active ' : ''}" id="${i}">
+            <a class="${page != i ? 'text-white' : 'text-danger'}" onclick="updatePage('${i}')">${i+1}</a>
+        </li>
+      `).join('')}
+    </ul>
+  `;
+}else{
+    if(data.page!=0){
+    updatePage()
+    }
+}
+
+
+            }
+          });
+        }
+      </script>
+      
+
+  <%- include ('../layouts/footer.ejs') %>

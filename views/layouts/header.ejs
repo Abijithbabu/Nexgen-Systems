@@ -1,0 +1,98 @@
+<!--====== Main Header ======-->
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link href="images/favicon.png" rel="shortcut icon">
+    <title>Nexgen </title>
+
+    
+    <!--====== Vendor Css ======-->
+    <!-----------------------new style-------------------------------------------------------------------------------------------------------------------------------->
+    <link href="assets/img/favicon.png" rel="icon">
+    <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+    <!--====== Google Font ======-->
+    <!-- <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800" rel="stylesheet"> -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous"> 
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/6.0.0/bootbox.min.js" integrity="sha512-oVbWSv2O4y1UzvExJMHaHcaib4wsBMS5tEP3/YkMP6GmkwRJAa79Jwsv+Y/w7w2Vb/98/Xhvck10LyJweB8Jsw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+      <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <!-- Vendor CSS Files -->
+    <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+    <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+    <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+    <link href="assets/vendor/remixicon/remixicon.css" rel="stylesheet">
+    <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+    
+    <!-- Template Main CSS File -->
+    <link href="assets/css/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/vendor.css">
+    
+    <!--====== Utility-Spacing ======-->
+    <link rel="stylesheet" href="css/utility.css">
+    
+    <!--====== App ======-->
+    <link rel="stylesheet" href="css/app.css">
+</head>
+<body >
+        <nav class="navbar navbar-expand-lg bg-body-tertiary fixed-top bg-dark" style="height: 60px;">
+          <div class="container-fluid">
+            <a class="navbar-brand" href="/products">Ne<span style="color: rgb(70, 70, 231);">x</span>gen</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+                <li class="nav-item"><a class="nav-link scrollto <%if(head==1){%>active<%}%>" href="/">Home</a></li>
+                <li class="nav-item"><a class="nav-link scrollto <%if(head==2){%>active<%}%>" href="/products">shop</a></li>
+                <li class="nav-item"><a class="nav-link scrollto <%if(head==3){%>active<%}%>" href="/wishList">wishList</a></li>
+                <li class="nav-item"><a class="nav-link scrollto <%if(head==4){%>active<%}%>" href="/cart">cart</a></li>
+               
+              </ul>
+              <ul style=" list-style: none;">
+              <li class="nav-item"><a href="/wishList"><i class="far fa-heart"></i></a></li>
+              <li class="nav-item"><a href="/cart" class="mini-cart-shop-link"><i class="fas fa-shopping-bag"></i>
+
+                <!-- <span class="total-item-round"></span> -->
+              </a>
+              </li>
+                <% if(user){ %>
+                  <span class="has-dropdown" data-tooltip="tooltip" data-placement="left" style="text-decoration: none;" >
+      
+                      <a><i class="far fa-user-circle <%if(head==5){%>text-primary<%}else{%>text-white <%}%>" href="/profile"></i>&nbsp;<span class="<%if(head==5){%>text-primary<%}else{%>text-white <%}%>" style="font-weight:bold;font-size: small;"><%-user%></span></a>
+                      <span class="js-menu-toggle"></span>
+                      <ul style="display: block; list-style: none;">
+                          <li><a href="/dashboard"><i class="fas fa-user-circle u-s-m-r-6"></i><span>Account</span></a></li>
+                          <li><a href="/logout"><i class="fas fa-lock-open u-s-m-r-6"></i><span>Signout</span></a></li>
+                      </ul>
+                  </span>
+                  <% } else{ %>
+                  <span class="has-dropdown" data-tooltip="tooltip" data-placement="left" style="text-decoration: none;display:flex;flex-direction: column;" >
+                      <a><i class="far fa-user-circle text-white "></i>&nbsp;<span class="text-white " style="font-weight:bold;font-size: small;">Get started</span></a>
+                      <span class="js-menu-toggle"></span>
+                      <ul style="display: block; list-style: none;">                    
+                          <li><a href="/register"><i class="fas fa-user-plus u-s-m-r-6"></i><span>Signup</span></a></li>
+                          <li><a href="/login"><i class="fas fa-lock u-s-m-r-6"></i><span>Signin</span></a></li>                
+                      </ul>
+                  </span>
+                  <% }  %>   
+
+            </ul>
+            </div>
+          </div>
+        </nav>
+      </header>
+

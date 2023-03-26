@@ -1,0 +1,129 @@
+<%- include('../layouts/profile.ejs') %>
+        <div id="order" class="col-lg-9 my-lg-0 my-1">
+
+  <div  class="main-content" style="background-color: #292929;">
+                
+              
+                <div class="text-uppercase">My orders</div>
+                <% if(orders.length>0){
+                for(let key of orders){
+                    for(let skey of key.products.item){%>
+                <div class="order my-3 bg-light">
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <div class="d-flex flex-column justify-content-between order-summary">
+                                <div class="d-flex align-items-center">
+                                    <div ><span class="fs-8">#<%-skey.productId.name%></span></div>
+                                    <div class=" ms-auto text-uppercase"><%-key.payment%></div>
+                                </div>
+                                <div class="fs-8">Qty x<%-skey.qty%></div>
+                                <div class="fs-8"><%-key.createdAt%></div>
+                                <% if(key.status == 'Delivered'){%>
+                                    <% function findValueByKey(id) {
+                                        const obj = skey.productId.Rating.find(obj => obj.user == id);
+                                        if (obj) {
+                                          return obj.rating;
+                                        } else {
+                                          return 0 ;
+                                        }
+                                      }
+                                      const rating = findValueByKey(u_id);
+                                   %>
+                                <div class="rating d-flex align-items-center pt-1">
+                                     <img src="https://www.freepnglogos.com/uploads/like-png/like-png-hand-thumb-sign-vector-graphic-pixabay-39.png"
+                                        alt=""><span class="px-2">Rating:</span>
+                                    <div id="full-stars-example-two">
+                                            <div class="rating-group">
+                                                <label aria-label="1 star" class="rating__label" for="<%-skey.productId._id%>-1"><i class="rating__icon rating__icon--star fas fa-star s1"></i></label>
+                                                <input class="rating__input" <% if(rating == 1){%>checked<%}%> onclick="rat('<%-skey.productId._id%>',this.value)" name="<%-skey.productId._id%>" id="<%-skey.productId._id%>-1" value="1" type="radio">
+                                                <label aria-label="2 stars" class="rating__label" for="<%-skey.productId._id%>-2"><i class="rating__icon rating__icon--star fas fa-star s2"></i></label>
+                                                <input class="rating__input" <% if(rating == 2){%>checked<%}%> onclick="rat('<%-skey.productId._id%>',this.value)" name="<%-skey.productId._id%>" id="<%-skey.productId._id%>-2" value="2" type="radio">
+                                                <label aria-label="3 stars" class="rating__label" for="<%-skey.productId._id%>-3"><i class="rating__icon rating__icon--star fas fa-star s3"></i></label>
+                                                <input class="rating__input" <% if(rating == 3){%>checked<%}%> onclick="rat('<%-skey.productId._id%>',this.value)" name="<%-skey.productId._id%>" id="<%-skey.productId._id%>-3" value="3" type="radio">
+                                                <label aria-label="4 stars" class="rating__label" for="<%-skey.productId._id%>-4"><i class="rating__icon rating__icon--star fas fa-star s4"></i></label>
+                                                <input class="rating__input" <% if(rating == 4){%>checked<%}%> onclick="rat('<%-skey.productId._id%>',this.value)" name="<%-skey.productId._id%>" id="<%-skey.productId._id%>-4" value="4" type="radio">
+                                                <label aria-label="5 stars" class="rating__label" for="<%-skey.productId._id%>-5"><i class="rating__icon rating__icon--star fas fa-star s5"></i></label>
+                                                <input class="rating__input" <% if(rating == 5){%>checked<%}%> onclick="rat('<%-skey.productId._id%>',this.value)" name="<%-skey.productId._id%>" id="<%-skey.productId._id%>-5" value="5" type="radio">
+                                            </div>
+                                          </div>
+                                </div><%}%>
+                            </div>
+                        </div>
+                        <div class="col-lg-8">
+                            <div class="d-sm-flex align-items-sm-start justify-content-sm-between">
+                                <div class="status">Status : <%-key.status%></div>
+                                <a href="/orderDetails?id=<%-key._id%>"><div class="btn btn-primary text-uppercase">order info</div></a> 
+                            </div>
+                            <% if(key.status == 'Cancelled'){%>
+                                <div class="progressbar-track">
+                                    <ul class="progressbar">
+                                        <li id="step-1" class="text-muted red">
+                                            <span class="fas fa-gift"></span>
+                                        </li>
+                                        <li id="step-2" class="text-muted red">
+                                            <span class="fas fa-check"></span>
+                                        </li>
+                                        <li id="step-3" class="text-muted red">
+                                            <span class="fas fa-box"></span>
+                                        </li>
+                                        <li id="step-4" class="text-muted red">
+                                            <span class="fas fa-truck"></span>
+                                        </li>
+                                        <li id="step-5" class="text-muted red">
+                                            <span class="fas fa-box-open"></span>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <%}else{%>
+                                    <div class="progressbar-track">
+                                        <ul class="progressbar">
+                                            <li  id="step-1" class="text-muted <% if(['Placed', 'Accepted', 'Packed','Shipped','Delivered'].includes(key.status)){%> green <%}%>">
+                                                <span class="fas fa-gift"></span>
+                                            </li>
+                                            <li id="step-2" class="text-muted <% if(['Accepted', 'Packed','Shipped','Delivered'].includes(key.status)){%> green <%}%>">
+                                                <span class="fas fa-check"></span>
+                                            </li>
+                                            <li id="step-3" class="text-muted <% if(['Packed','Shipped','Delivered'].includes(key.status)){%> green <%}%>">
+                                                <span class="fas fa-box"></span>
+                                            </li>
+                                            <li id="step-4" class="text-muted <% if(['Shipped','Delivered'].includes(key.status)){%> green <%}%>">
+                                                <span class="fas fa-truck"></span>
+                                            </li>
+                                            <li id="step-5" class="text-muted <% if(['Delivered'].includes(key.status)){%> green <%}%>">
+                                                <span class="fas fa-box-open"></span>
+                                            </li>
+                                        </ul>
+                                        <div id="tracker" <%if(key.status =='Placed'){%>style="width:18%"<%}else if(key.status =='Accepted'){%>style="width:35%" <%}else if(key.status =='Packed'){%>style="width:60%"<%}else if(key.status =='Shipped'){%>style="width:85%"<%}else if(key.status =='Delivered'){%>style="width:100%"<%}%> ></div>
+                                        </div>
+                                    <%}%>    
+                            </div>
+                        </div>
+                    </div>  
+                    <%}}}else{%>
+                        <div>
+                            no orders found
+                        </div>
+                        <%}%>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function rat(id,rating){
+         console.log(id,rating);
+         $.ajax({
+          url: '/updateRating',
+          type: 'POST',
+          data: { rating:rating , _id:id },
+          success: function(data) {
+            console.log(data);
+            
+          },
+          error: function(jqXHR, textStatus, errorThrown) {
+            console.log(textStatus, errorThrown);
+          }
+        });
+    }
+</script>
+<%- include ('../layouts/footer.ejs') %>

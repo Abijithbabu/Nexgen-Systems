@@ -1,0 +1,656 @@
+<%- include('../layouts/header') %>
+<!--====== Main App ======-->
+<div id="app">
+    
+    
+    <!--====== App Content ======-->
+    <div class="app-content">
+        
+        <!--====== Section 1 ======-->
+        <div class="u-s-p-y-60">
+            
+            <!--====== Section Content ======-->
+            <div class="section__content">
+                <div class="container">
+                    <div class="breadcrumb">
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--====== End - Section 1 ======-->
+        
+        
+        <form action="/placeOrder" method="post">
+            <!--====== Section 2 ======-->
+            <div class="u-s-p-b-60">
+
+                <!--====== Section Content ======-->
+                <div class="section__content">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div id="checkout-msg-group">
+
+                                    <div class="msg">
+
+                                        <span class="msg__text">Have a coupon?
+
+                                            <a class="gl-link" href="#have-coupon" data-toggle="collapse">Click Here to
+                                                enter your code</a></span>
+                                        <div class="collapse" id="have-coupon" data-parent="#checkout-msg-group">
+                                            <div class="c-f u-s-m-b-16">
+
+                                                <span class="gl-text u-s-m-b-16">Enter your coupon code if you have
+                                                    one.</span>
+                                                <div class="u-s-m-b-16">
+                                                    <div class="u-s-m-b-15">
+                                                        <label for="coupon"></label>
+
+                                                        <select class="input-text input-text--primary-style" id="coupon"
+                                                            name="coupon" placeholder="Coupon Code">
+                                                            <% for( let key of coupons){%>
+                                                                <option value="<%-key._id%>"><%-key.name%></option>
+                                                                <%}%>
+                                                        </select>
+                                                    </div>
+                                                    <div class="u-s-m-b-15">
+
+                                                        <button type="button" class="btn btn--e-transparent-brand-b-2"
+                                                            onclick="apply()">APPLY</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--====== End - Section Content ======-->
+            </div>
+            <!--====== End - Section 2 ======-->
+
+
+            <!--====== Section 3 ======-->
+            <div class="u-s-p-b-60">
+
+                <!--====== Section Content ======-->
+                    <div class="section__content">
+                        <div class="container">
+                            <div class="checkout-f">
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <h1 class="checkout-f__h1">DELIVERY INFORMATION</h1>
+                                        <div class="u-s-m-b-30">
+                                            <% if(address.length>0){
+                                                for(i=0;i<address.length ; i++){%>
+                                                    <div class="u-s-m-b-10">
+                                                        <div class="radio-box">
+
+                                                            <input type="radio" id="<%-i%>Address" <% if(i==0){%>checked<%}%> name="address"
+                                                                value="<%-address[i]._id%>">
+                                                            <div class="radio-box__state radio-box__state--primary">
+
+                                                                <label class="radio-box__label"
+                                                                    for="<%-i%>Address">Address <%-i+1%></label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="text-area text-area--primary-style" id="order-note">
+                                                            <%= address[i].firstname %>
+                                                                <%= address[i].lastname%> <br>
+                                                                    <%= address[i].address %> <br>
+                                                                        <%= address[i].city %> , <%= address[i].state %>
+                                                                                <br>
+                                                                                <%= address[i].country %> <br>
+                                                                                    Pin: <%= address[i].zip %> <br>
+                                                                                        Phone: <%= address[i].mobile %>
+                                                                                            <br>
+                                                        </div>
+                                                    </div>
+                                                    <%}}%>
+                                                        <div class="u-s-m-b-15">
+                                                            <!--====== Check Box ======-->
+                                                            <div class="radio-box">
+
+                                                                <input type="radio" id="newAddress" value=0 <%if(address.length==0){%>checked<%}%>
+                                                                    name="address">
+                                                                <div class="radio-box__state radio-box__state--primary">
+
+                                                                    <label class="radio-box__label"
+                                                                        for="newAddress">use a new shipping and
+                                                                        billing address</label>
+                                                                </div>
+                                                            </div>
+
+                                                            <!--====== End - Check Box ======-->
+                                                        </div>
+
+                                                        <!--====== First Name, Last Name ======-->
+                                                        <div class="gl-inline">
+                                                            <div class="u-s-m-b-15">
+
+                                                                <label class="gl-label" for="firstname">FIRST NAME
+                                                                    *</label>
+
+                                                                <input class="input-text input-text--primary-style"
+                                                                    type="text" id="firstname" name="firstname"
+                                                                    data-bill="">
+                                                            </div>
+                                                            <div class="u-s-m-b-15">
+
+                                                                <label class="gl-label" for="lastname">LAST NAME
+                                                                    *</label>
+
+                                                                <input class="input-text input-text--primary-style"
+                                                                    type="text" id="lastname" name="lastname"
+                                                                    data-bill="">
+                                                            </div>
+                                                        </div>
+
+                                                        <!--====== Street Address ======-->
+                                                        <div class="u-s-m-b-15">
+
+                                                            <label class="gl-label" for="street">STREET ADDRESS
+                                                                *</label>
+
+                                                            <input class="input-text input-text--primary-style"
+                                                                type="text" id="street" name="street"
+                                                                placeholder="House name and street name" data-bill="">
+                                                        </div>
+
+                                                        <div class="u-s-m-b-15">
+
+                                                            <!--====== Select Box ======-->
+
+                                                            <label class="gl-label" for="country">COUNTRY
+                                                                *</label><select name="country"
+                                                                class="select-box select-box--primary-style"
+                                                                id="country" data-bill="">
+                                                                <option selected value="">Choose Country</option>
+                                                                <option value="uae">United Arab Emirate (UAE)</option>
+                                                                <option value="uk">United Kingdom (UK)</option>
+                                                                <option value="us">United States (US)</option>
+                                                            </select>
+                                                            <!--====== End - Select Box ======-->
+                                                        </div>
+                                                        <!--====== End - Country ======-->
+
+
+                                                        <!--====== Town / City ======-->
+                                                        <div class="u-s-m-b-15">
+
+                                                            <label class="gl-label" for="city">TOWN/CITY
+                                                                *</label>
+
+                                                            <input class="input-text input-text--primary-style"
+                                                                type="text" name="city" id="city"
+                                                                data-bill="">
+                                                        </div>
+                                                        <!--====== End - Town / City ======-->
+
+
+                                                        <!--====== STATE/PROVINCE ======-->
+                                                        <div class="u-s-m-b-15">
+
+                                                            <!--====== Select Box ======-->
+
+                                                            <label class="gl-label" for="state">STATE/PROVINCE
+                                                                *</label><select
+                                                                class="select-box select-box--primary-style"
+                                                                name="state" id="state" data-bill="">
+                                                                <option selected value="">Choose State/Province</option>
+                                                                <option value="al">Alabama</option>
+                                                                <option value="al">Alaska</option>
+                                                                <option value="ny">New York</option>
+                                                            </select>
+                                                            <!--====== End - Select Box ======-->
+                                                        </div>
+                                                        <!--====== End - STATE/PROVINCE ======-->
+
+
+                                                        <!--====== ZIP/POSTAL ======-->
+                                                        <div class="u-s-m-b-15">
+
+                                                            <label class="gl-label" for="pin">ZIP/POSTAL CODE
+                                                                *</label>
+
+                                                            <input class="input-text input-text--primary-style"
+                                                                type="text" id="pin"
+                                                                placeholder="Zip/Postal Code" name="pin" data-bill="">
+                                                        </div>
+                                                        <!--====== End - ZIP/POSTAL ======-->
+                                                        <!--====== PHONE ======-->
+                                                        <div class="u-s-m-b-15">
+
+                                                            <label class="gl-label" for="mno">PHONE *</label>
+
+                                                            <input class="input-text input-text--primary-style"
+                                                                type="number" name="mno" id="mno"
+                                                                data-bill="">
+                                                        </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <h1 class="checkout-f__h1">ORDER SUMMARY</h1>
+
+                                        <!--====== Order Summary ======-->
+                                        <div class="o-summary">
+                                            <div class="o-summary__section u-s-m-b-30">
+                                                <div class="o-summary__item-wrap gl-scroll">
+                                                    <% for(let key of products.item){ %>
+                                                        <div class="o-card">
+                                                            <div class="o-card__flex">
+                                                                <div class="o-card__img-wrap">
+
+                                                                    <img class="u-img-fluid"
+                                                                        src="/uploads/<%=key.productId.image[0] %>" alt="">
+                                                                </div>
+                                                                <div class="o-card__info-wrap">
+
+                                                                    <span class="o-card__name">
+
+                                                                        <a
+                                                                            href="/productDetail?id=<%-key.productId._id%>">
+                                                                            <%= key.productId.name %>
+                                                                        </a></span>
+
+                                                                    <span class="o-card__quantity">Quantity x <%=
+                                                                            key.qty %></span>
+
+                                                                    <span class="o-card__price">$<%= key.productId.price
+                                                                            %>.00</span>
+                                                                </div>
+                                                            </div>
+
+                                                            <span class="o-card__quantity text-dark">Quantity x <%=
+                                                                    key.qty %></span>
+                                                        </div>
+                                                        <%}%>
+                                                </div>
+                                            </div>
+
+                                            <div class="o-summary__section u-s-m-b-30">
+                                                <div class="o-summary__box">
+                                                    <table class="o-summary__table">
+                                                        <tbody>
+                                                            <tr>
+                                                                <td>SHIPPING</td>
+                                                                <td>$4.00</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>TAX</td>
+                                                                <td>$0.00</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>SUBTOTAL</td>
+                                                                <td>₹ <%= products.totalPrice %>.00</td>
+                                                                <input type="hidden" value="<%= products.totalPrice %>"
+                                                                    id="subTotal" />
+                                                            </tr>
+                                                          
+                                                            <tr id="dis">
+
+                                                            </tr>
+                                                            <tr id="amt">
+
+                                                            </tr>
+                                                          
+                                                            <tr id="gT">
+                                                                <td>GRAND TOTAL</td>
+                                                                <td>₹ <%= products.totalPrice%>.00</td>
+                                                                <input type="hidden" id="gTotal" value="<%= products.totalPrice %>"
+                                                                    name="amount" />                                                           
+                                                                
+                                                            </tr>
+                                                </div>
+                                                </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <% if(userData.wallet>0){ %>
+                                        <div class="o-summary__section u-s-m-b-30">
+                                            <div class="o-summary__box">
+                                                <h1 class="checkout-f__h1">WALLET BALANCE</h1>
+                                                <div class="u-s-m-b-10">
+                                                    <input type="hidden" id="payable" value="<%= products.totalPrice %>"
+                                                    name="payable" />
+                                                    <!--====== Radio Box ======-->
+                                                    <div >
+                                                        <input value="COD"  type="checkbox" id="cb" onchange="val('<%=userData.wallet %>')">
+                                                        <div class="radio-box__state radio-box__state--primary">
+
+                                                            <label class="radio-box__label" for="">₹ <%=userData.wallet %></label>
+                                                           
+                                                        </div>
+                                                    </div>
+                                                    <!--====== End - Radio Box ======-->
+
+                                                    <span class="gl-text u-s-m-t-6">Pay Upon From your Wallet. </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <% }else{%>
+                                            <input type="hidden" id="payable" value="<%= products.totalPrice %>"
+                                        <%}%>     
+                                        <div class="o-summary__section u-s-m-b-30">
+                                            <div class="o-summary__box">
+                                                <h1 class="checkout-f__h1">PAYMENT INFORMATION</h1>
+                                                <div class="u-s-m-b-10 ">
+
+                                                    <!--====== Radio Box ======-->
+                                                    <div class="radio-box">
+
+                                                        <input value="COD" class="ppmm" type="radio" required id="cash-on-delivery"
+                                                            name="payment" checked>
+                                                        <div class="radio-box__state radio-box__state--primary">
+
+                                                            <label class="radio-box__label" for="cash-on-delivery">Cash
+                                                                on Delivery</label>
+                                                        </div>
+                                                    </div>
+                                                    <!--====== End - Radio Box ======-->
+
+                                                    <span class="gl-text u-s-m-t-6">Pay Upon Cash on delivery. (This
+                                                        service is only available for some countries)</span>
+                                                </div>
+                                    
+
+                                                <div class="u-s-m-b-10">
+
+                                                    <!--====== Radio Box ======-->
+                                                    <div class="radio-box">
+
+                                                        <input value="Debit Card" class="ppmm" type="radio" required id="pay-with-card"  name="payment">
+                                                        <div class="radio-box__state radio-box__state--primary">
+
+                                                            <label class="radio-box__label" for="pay-with-card">Pay With
+                                                                Credit / Debit Card</label>
+                                                        </div>
+                                                    </div>
+                                                    <span class="gl-text u-s-m-t-6">International Credit Cards must be
+                                                        eligible for use within the United States.</span>
+                                                </div>
+                                                <div class="u-s-m-b-10">
+                                                    <div class="radio-box">
+
+                                                        <input class="ppmm" type="radio" required value="UPI" id="pay-pal" name="payment">
+                                                        <div class="radio-box__state radio-box__state--primary">
+
+                                                            <label class="radio-box__label" for="pay-pal">Razor Pay
+                                                                </label>
+                                                        </div>
+                                                    </div>
+                                                    <span class="gl-text u-s-m-t-6">When you click "Place Order" below
+                                                        we'll take you to Razorpay's site to set up your billing
+                                                        information.</span>
+                                                </div>
+                                                <div>
+                                                    <button class="btn btn--e-brand-b-2 btn-outline-warning btn-sm" onclick="placeOrder()"
+                                                        type="button">PLACE ORDER</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div> 
+</div>
+
+    <script src="js/vendor.js"></script>
+    <script src="js/jquery.shopnav.js"></script>
+    <script src="js/app.js"></script>
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <script>
+        function val(p){
+           gTotal =parseInt(document.getElementById('gTotal').value)
+           value = parseInt(p)
+           console.log(value,gTotal);
+           console.log(typeof(value),typeof(gTotal))
+           if( document.getElementById('cb').checked){  
+            if(value>=gTotal){
+                document.getElementById('pay-pal').checked = false
+                document.getElementById('pay-with-card').checked = false
+                document.getElementById('cash-on-delivery').checked = false
+                document.getElementById('pay-pal').setAttribute('disabled','')
+                document.getElementById('pay-with-card').setAttribute('disabled','')
+                document.getElementById('cash-on-delivery').setAttribute('disabled','')
+                document.getElementById('payable').value = 0 
+                console.log(document.getElementById('payable').value);
+            }else {
+                document.getElementById('cash-on-delivery').checked = false
+
+                document.getElementById('cash-on-delivery').setAttribute('disabled','')
+                balance = gTotal-value
+                console.log(balance);
+                document.getElementById('payable').value = balance 
+                console.log(document.getElementById('payable').value);
+            }
+        }else{
+            document.getElementById('pay-pal').removeAttribute('disabled','')
+                document.getElementById('pay-with-card').removeAttribute('disabled','')
+                document.getElementById('cash-on-delivery').removeAttribute('disabled','')
+        }
+        }
+        function apply() {
+            cop = document.getElementById('coupon').value
+            subT = document.getElementById('subTotal').value
+            $.ajax({
+                url: '/applyCoupon',
+                type: 'POST',
+                data: { id: cop },
+                success: function (data) {
+                  if(subT>=data.couponData.min){
+                    disc = (data.couponData.discount*subT)/100;
+                    if(disc>data.couponData.max){
+                        disc =data.couponData.max
+                    }
+                    total = subT-disc;
+                    document.getElementById('dis').innerHTML = `
+                    <td>COUPON DISCOUNT</td>
+                    <td>${data.couponData.discount} %</td>`
+                    document.getElementById('amt').innerHTML = `    
+                    <td></td>
+                    <td>₹ -${disc}.00</td>`
+                    document.getElementById('gT').innerHTML = `    
+                    <td>GRAND TOTAL</td>
+                    <td>₹ ${total}.00</td>
+                    <input type="hidden" id='gTotal' value="${total}" name="amount" />`
+                    document.getElementById('payable').value = total
+                    console.log(data);
+                  }
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.log(textStatus, errorThrown);
+                }
+            });
+
+        }
+
+    function placeOrder(){
+        let data
+        console.log('k');
+        const selectedValue = document.querySelector('input[name="payment"]:checked').value;console.log('e');
+        const selectedAddress = document.querySelector('input[name="address"]:checked').value;console.log('s');
+        const coupon = document.getElementById('coupon').value
+        console.log('u');
+        const total = document.getElementById('payable').value
+        console.log('kesu');
+        if(selectedAddress == 0){
+            firstname =  document.getElementById('firstname').value
+            lastname = document.getElementById('lastname').value
+            country = document.getElementById('country').value
+            street = document.getElementById('street').value
+            city = document.getElementById('city').value
+            state = document.getElementById('state').value
+            pin = document.getElementById('pin').value
+            mno = document.getElementById('mno').value
+            data = { payment:selectedValue,address:selectedAddress,coupon:coupon,payable:total,firstname,lastname,country,street,city,state,pin,mno}
+        }else{
+            data = { payment:selectedValue,address:selectedAddress,coupon:coupon,payable:total}
+        }
+        $.ajax({
+                url: '/placeOrder',
+                type: 'POST',
+                data: data,
+                success: function (data) {
+                if(data.method=='COD'){
+                    success()
+                }else{
+                    var options = {
+            "key": data.key_id,
+            "amount": data.total,
+            "currency": "INR",
+            "name": "NEXGEN SYSTEMS",
+            "description": "Payment for your order",
+            "image": "/uploads/logo.png",
+            "order_id": data.order_id,
+            "handler": function (response){
+                console.log(response+'la la la');
+                var payment_id = response.razorpay_payment_id;
+                success()
+            },
+            "prefill": {
+                "name":data.user.name,
+                "email": data.user.email,
+                "contact": data.user.mobile
+            },
+            "theme": {
+                "color": "#212529"
+            }
+        };
+        var rzp = new Razorpay(options);
+rzp.on('payment.cancel', function(response) {
+    // handle the payment cancellation
+    alert('Payment cancelled!');
+});
+
+rzp.on('payment.error', function(response) {
+    // handle the payment error
+    var error_code = response.error.code;
+    var error_description = response.error.description;
+    alert('Payment error: ' + error_description + ' (' + error_code + ')');
+});
+            rzp.open();
+
+                }
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.log(textStatus, errorThrown);
+                }
+            })
+    } 
+     function success(){
+        $.ajax({
+        url: '/orderSuccess',
+        type: 'GET',
+        data: {  },
+        success: function(data) {
+            console.log('la la 2');
+        document.getElementById('app').innerHTML = ` <style type="text/css">
+        body
+        {
+            background:#000000;
+        }
+    
+        .payment
+        {
+            border:1px solid #000000;
+            height:280px;
+            border-radius:20px;
+            background:#fff;
+        }
+       .payment_header
+       {
+           background:rgb(42, 125, 11);
+           padding:20px;
+           border-radius:20px 20px 0px 0px;
+           
+       }
+       
+       .check
+       {
+           margin:0px auto;
+           width:50px;
+           height:50px;
+           border-radius:100%;
+           background:#fff;
+           text-align:center;
+       }
+       
+       .check i
+       {
+           vertical-align:middle;
+           line-height:50px;
+           font-size:30px;
+       }
+    
+        .content 
+        {
+            text-align:center;
+        }
+    
+        .content  h1
+        {
+            font-size:25px;
+            padding-top:25px;
+        }
+    
+        .content a
+        {
+            width:200px;
+            height:35px;
+            color:#fff;
+            border-radius:30px;
+            padding:5px 10px;
+            background:rgb(10, 159, 8);
+            transition:all ease-in-out 0.3s;
+        }
+    
+        .content a:hover
+        {
+            text-decoration:none;
+            background:#000;
+        }
+       
+    </style>
+
+    <div class="container">
+        <div class="row">
+           <div class="col-md-6 mx-auto mt-5">
+              <div class="payment">
+                 <div class="payment_header">
+                    <div class="check"><i class="fa fa-check" aria-hidden="true"></i></div>
+                 </div>
+                 <div class="content">
+                    <h1>Order Success !</h1>
+                    <p>your order is succesfull thank you for shopping... !</p><br>
+                    <a href='/' id='redir'style="text-decoration: none;" ></a>
+                 </div>
+              </div>
+           </div>
+        </div>
+     </div> `
+     var sec = 10;
+            var timer = setInterval(function () {
+            document.getElementById('redir').innerHTML = 'redirecting in 00:' + sec+' sec';
+            sec--;
+            if (sec < 0) {
+                 clearInterval(timer);
+                 document.getElementById('redir').innerHTML = '';
+                 document.getElementById('redir').click()
+            }
+         }, 1000)}
+    })
+     }   
+    </script>
+
+
+    <%- include ('../layouts/footer.ejs') %>

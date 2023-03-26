@@ -1,0 +1,138 @@
+<%- include('../layouts/profile.ejs') %>
+<div class="col-lg-9 my-lg-0 my-1">
+<section class="bg-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 mb-4 mb-sm-5">
+                <div class="card card-style1 border-0">
+                    <div class="card-body p-1-9 p-sm-2-3 p-md-6 p-lg-7">
+                        <div class="row align-items-center">
+                           
+                            <div class="col-lg-9 col-md-12">
+                                    <div class="dash__box dash__box--shadow dash__box--radius dash__box--bg-white u-s-m-b-30">
+                                        <div class="dash__pad-2">
+                                            <h1 class="dash__h1 u-s-m-b-14">My Profile</h1>
+
+                                            <span class="dash__text u-s-m-b-30">Look all your info, you could customize your profile.</span>
+                                            <div style="padding-left: 50px; padding-bottom: 25px;" >
+                                                <img src="/uploads/<%-userData.profile%>" width="250px" height="250"  style="border-radius: 50%;" alt="no image">
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-lg-4 u-s-m-b-30">
+                                                    <h2 class="dash__h2 u-s-m-b-8">Full Name</h2>
+
+                                                    <span class="dash__text"><%-userData.name%></span>
+                                                </div>
+                                                <div class="col-lg-4 u-s-m-b-30">
+                                                    <h2 class="dash__h2 u-s-m-b-8">E-mail</h2>
+
+                                                    <span class="dash__text"><%-userData.email%></span>
+                                                    <div class="dash__link dash__link--secondary">
+
+                                                        <a href="#"></a></div>
+                                                </div>
+                                                <div class="col-lg-4 u-s-m-b-30">
+                                                    <h2 class="dash__h2 u-s-m-b-8">Phone</h2>
+
+                                                    <span class="dash__text">+91 <%-userData.mobile%></span>
+                                                    <div class="dash__link dash__link--secondary">
+
+                                                        <a href="#"></a></div>
+                                                </div>
+                                                <!-- <div class="col-lg-4 u-s-m-b-30">
+                                                    <h2 class="dash__h2 u-s-m-b-8">Birthday</h2>
+
+                                                    <span class="dash__text">1991-02-02</span>
+                                                </div>
+                                                <div class="col-lg-4 u-s-m-b-30">
+                                                    <h2 class="dash__h2 u-s-m-b-8">Gender</h2>
+
+                                                    <span class="dash__text">Male</span>
+                                                </div> -->
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-lg-12">
+                                                    <div class="dash__link dash__link--secondary u-s-m-b-30">
+
+                                                        <!-- <a href='#' data-toggle="modal" data-target="#edit"
+                                class="btn btn-primary a-btn-slide-text btn-sm">change Profile Photo</a></div> -->
+                                                    <div class="u-s-m-b-16">
+
+                                                        <a class="dash__custom-link btn--e-transparent-brand-b-2" data-toggle="modal" data-target="#user">Edit Profile</a></div>
+                                                    <div>
+
+                                                        <a class="dash__custom-link btn--e-brand-b-2" href="/forget">Change Password</a></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+</div>
+</div>
+</div>
+</div>
+
+
+
+<div class="modal fade" id="user" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+aria-hidden="true">
+<div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title text-dark" id="exampleModalLongTitle">EDIT PROFILE</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <p style="color: black;">Enter User Cerdentials</p>
+            <form action="/editUser" method="post" enctype="multipart/form-data">
+                <div class="card mb-4">
+                    <div class="mb-3 row">
+                        <label for="html5-text-input " class="col-sm-2 text-dark col-form-label">Username</label>
+                        <div class="col-md-10">
+                            <input class="form-control" type="text" value="<%-userData.name%>" id="html5-text-input"
+                                name="name" required />
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label for="html5-text-input " class="col-sm-2 col-form-label text-dark">E-mail</label>
+                        <div class="col-md-10">
+                            <input class="form-control" type="text" id="html5-text-input" value="<%-userData.email%>" name="email"
+                                required />
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label for="html5-text-input " class="col-sm-2 col-form-label text-dark">Phone</label>
+                        <div class="col-md-10">
+                            <input class="form-control" type="text" id="html5-text-input" name="mno" value="<%-userData.mobile%>"
+                                required />
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <div>
+                            <label for="formFileMultiple" class="form-label text-dark">Select image to
+                                upload</label>
+                            <input class="form-control" name="image" type="file" id="image"
+                                accept="image/*" required />
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary"
+                        data-dismiss="modal">cancel</button>
+                    <button type="submit" class="btn btn-primary" >Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</div>
+<%- include ('../layouts/footer.ejs') %>

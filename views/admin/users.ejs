@@ -1,0 +1,124 @@
+<%- include ('../layouts/adminHeader.ejs') %>
+
+  <div class="layout-page">
+    <nav class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme"
+      id="layout-navbar">
+      <div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none">
+        <a class="nav-item nav-link px-0 me-xl-4" href="javascript:void(0)">
+          <i class="bx bx-menu bx-sm"></i>
+        </a>
+      </div>
+
+      <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
+        <!-- Search -->
+        <div class="navbar-nav align-items-center">
+          <form>
+            <div class="nav-item d-flex align-items-center">
+              <button style="border: 0; background-color: rgb(255, 255, 255);" type="submit"><i
+                  class="bx bx-search fs-4 lh-0"></i></button>
+              <input type="text" name="search" class="form-control border-0 shadow-none" placeholder="Search..."
+                aria-label="Search..." value="<%-val%>" />
+            </div>
+          </form>
+        </div>
+        <!-- /Search -->
+        </ul>
+      </div>
+    </nav>
+
+    <!-- / Navbar -->
+
+    <div class="content-wrapper">
+      <div class="container-xxl flex-grow-1 container-p-y">
+        <div class="card">
+          <h5 class="card-header">USER DETAILS</h5>
+          <div class="table-responsive text-nowrap">
+            <table class="table" style="table-layout: fixed;font-size: small;">
+              <thead class="thead-light">
+                <tr>
+                  <th scope="col">sl.no</th>
+                  <th scope="col">profile</th>
+                  <th scope="col">Name</th>
+                  <th scope="col">Email</th>
+                  <th scope="col">Mobile</th>
+                  <th scope="col">Status</th>
+                  <th scope="col">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% if(users.length> 0){
+
+                  for(let i=0;i<users.length;i++){ %>
+                    <tr>
+                      <td><%-i+1%></td>
+                      <td>
+                        <img src="/uploads/<%= users[i].profile %>" alt="no profile" height="40px" style="border-radius: 50%;"> 
+                      </td>
+                      <td>
+                        <%= users[i].name %>
+                      </td>
+                      <td>
+                        <%= users[i].email %>
+                      </td>
+                      <td>
+                        <%= users[i].mobile %>
+                      </td>
+                      <td>
+                        <% if(users[i].is_verified){ if(users[i].status==1){ %>
+                          <span class="badge bg-label-success me-1">Online</span>
+                          <% } else{ %>
+                            <span class=" bg-label-primary me-1">last seen at <%=users[i].status %></span>
+                            <% }}else { %>
+                              <span class="badge bg-label-warning me-1">Blocked</span>
+                              <% } %>
+                      </td>
+                      <td>
+                        <div class="form-check form-switch">
+                          <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault" onchange="return listCat('<%= users[i]._id %>')" <% if(users[i].is_verified){ %>checked<%}%> />
+                          <label class="form-check-label" for="flexSwitchCheckDefault">
+                          </label>
+                        </div>
+                        <!-- <% if(users[i].is_verified){ %>
+                          <button class=" blk btn-outline-danger" data-toggle="modal" data-target="#block"
+                            onclick="del('<%- users[i]._id %>')">Block</button>
+                          <a id='<%- users[i]._id %>' href="/admin/block?id=<%= users[i]._id %>"
+                            style="display: none">Block</a>
+                          <% } else{ %>
+                            <button class=" blk btn-outline-danger" data-toggle="modal" data-target="#unBlock"
+                              onclick="del('<%- users[i]._id %>')">UnBlock</button>
+                            <a id='<%- users[i]._id %>' href="/admin/block?id=<%= users[i]._id %>"
+                              style="display: none">UnBlock</a>
+                            <% } %> -->
+                      </td>
+                    </tr>
+                    <% } } else{ %>
+                      <tr>
+                        <td colspan="5">users not found </td>
+                      </tr>
+                      <% } %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+<script>
+  function listCat(param) {
+  console.log(param);
+  data = { id:param}
+  axios.get('/admin/block?id='+param, data)
+    .then(res => {
+      if(res.data.state){   
+        mesg ='<p class="text-center mb-0 text-success">User UnBlocked Successfully...!</p>'
+      }else{
+        mesg ='<p class="text-center mb-0 text-danger">User Blocked Successfully...!</p>'
+      }
+      let dialog = bootbox.dialog({ message: mesg , backdrop:true,closeButton: false});
+         dialog.init(setTimeout(()=> dialog.modal('hide'), 2000))
+  })
+    .catch(error => {
+      console.log(error);
+    })
+}
+</script>
+        <!-- Footer -->
+        <%- include ('../layouts/adminFooter.ejs') %>

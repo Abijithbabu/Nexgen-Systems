@@ -1,0 +1,174 @@
+<%- include('../layouts/profile.ejs') %>
+        <div  id="dash" class="col-lg-9 my-lg-0 my-1">
+
+  <div class="main-content" style="background-color: #292929;">
+                <div class="d-flex flex-column">
+                    <div class="h5">Hello <%-user%>,</div>
+                    <div>Logged in as: <%-userData.email%></div>
+                </div>
+                <div class="d-flex my-4 flex-wrap">
+                    <div class="box me-3 my-1 bg-light">
+                        <img src="https://www.bing.com/ck/a?!&&p=25f112c42c91c3c6JmltdHM9MTY3ODMyMDAwMCZpZ3VpZD0zYzBiMmZhNi1hN2ZlLTYxODgtMWFmZC0zZTY5YTY1MzYwZGQmaW5zaWQ9NTQ2MQ&ptn=3&hsh=3&fclid=3c0b2fa6-a7fe-6188-1afd-3e69a65360dd&u=a1L2ltYWdlcy9zZWFyY2g_cT1XYWxsZXQlMjBJY29uJTIwUG5nJkZPUk09SVFGUkJBJmlkPUIwRUJDM0E3QkIxMTg3ODY0MjYwREE4OUI5MEUwMTMxQjc2NTFBMjY&ntb=1"
+                            alt="">
+                        <div class="d-flex align-items-center mt-2">
+                            <div class="tag">Balance</div>
+                            <div class="ms-auto "><%-userData.wallet%></div>
+                        </div>
+                    </div>
+                    <div class="box me-3 my-1 bg-light">
+                        <img src="https://www.freepnglogos.com/uploads/box-png/cardboard-box-brown-vector-graphic-pixabay-2.png"
+                            alt="">
+                        <div class="d-flex align-items-center mt-2">
+                            <div class="tag">Orders placed</div>
+                            <div class="ms-auto number"><%-orderData.length%></div>
+                        </div>
+                    </div>
+                    <div class="box me-3 my-1 bg-light">
+                        <img src="https://www.freepnglogos.com/uploads/shopping-cart-png/shopping-cart-campus-recreation-university-nebraska-lincoln-30.png"
+                            alt="">
+                        <div class="d-flex align-items-center mt-2">
+                            <div class="tag">Items in Cart</div>
+                            <div class="ms-auto number"><%-userData.cart.item.length%></div>
+                        </div>
+                    </div>
+                    <div class="box me-3 my-1 bg-light">
+                        <img src="https://www.freepnglogos.com/uploads/love-png/love-png-heart-symbol-wikipedia-11.png"
+                            alt="">
+                        <div class="d-flex align-items-center mt-2">
+                            <div class="tag">Wishlist</div>
+                            <div class="ms-auto number"><%-userData.wishlist.item.length%></div>
+                        </div>
+                    </div>
+                </div>
+              <% if(orderData.length>0){%>
+                <div class="text-uppercase">My recent orders</div>
+                <div class="order my-3 bg-light">
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <div class="d-flex flex-column justify-content-between order-summary">
+                                <div class="d-flex align-items-center">
+                                    <div class="text-uppercase"><%-orderData[orderData.length-1].products.item.length%></div>
+                                    <div class="blue-label ms-auto text-uppercase">paid</div>
+                                </div>
+                                <div class="fs-8">Products <%-orderData[orderData.length-1].products.item.length%></div>
+                                <div class="fs-8">22 August, 2020 | 12:05 PM</div>
+                                <div class="rating d-flex align-items-center pt-1">
+                                        <img src="https://www.freepnglogos.com/uploads/like-png/like-png-hand-thumb-sign-vector-graphic-pixabay-39.png"
+                                        alt=""><span class="px-2">Rating:</span>
+                                   
+                                       
+                                          <div id="full-stars-example-two">
+                                            <div class="rating-group">
+                                                <label aria-label="1 star" class="rating__label" for="rating1-1"><i class="rating__icon rating__icon--star fas fa-star s1"></i></label>
+                                                <input class="rating__input" name="rating1" id="rating1-1" value="1" type="radio">
+                                                <label aria-label="2 stars" class="rating__label" for="rating1-2"><i class="rating__icon rating__icon--star fas fa-star s2"></i></label>
+                                                <input class="rating__input" checked name="rating1" id="rating1-2" value="2" type="radio">
+                                                <label aria-label="3 stars" class="rating__label" for="rating1-3"><i class="rating__icon rating__icon--star fas fa-star s3"></i></label>
+                                                <input class="rating__input" name="rating1" id="rating1-3" value="3" type="radio">
+                                                <label aria-label="4 stars" class="rating__label" for="rating1-4"><i class="rating__icon rating__icon--star fas fa-star s4"></i></label>
+                                                <input class="rating__input" name="rating1" id="rating1-4" value="4" type="radio">
+                                                <label aria-label="5 stars" class="rating__label" for="rating1-5"><i class="rating__icon rating__icon--star fas fa-star s5"></i></label>
+                                                <input class="rating__input" name="rating1" id="rating1-5" value="5" type="radio">
+                                            </div>
+                                          </div>
+                                   
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-8">
+                            <div class="d-sm-flex align-items-sm-start justify-content-sm-between">
+                                <div class="status">Status : Delivered</div>
+                                <div class="btn btn-primary text-uppercase">order info</div>
+                            </div>
+                            <div class="progressbar-track">
+                                <ul class="progressbar">
+                                    <li id="step-1" class="text-muted green">
+                                        <span class="fas fa-gift"></span>
+                                    </li>
+                                    <li id="step-2" class="text-muted green">
+                                        <span class="fas fa-check"></span>
+                                    </li>
+                                    <li id="step-3" class="text-muted green ">
+                                        <span class="fas fa-box"></span>
+                                    </li>
+                                    <li id="step-4" class="text-muted green">
+                                        <span class="fas fa-truck"></span>
+                                    </li>
+                                    <li id="step-5" class="text-muted green">
+                                        <span class="fas fa-box-open"></span>
+                                    </li>
+                                </ul>
+                                <div id="tracker"></div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="order my-3 bg-light">
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <div class="d-flex flex-column justify-content-between order-summary">
+                                <div class="d-flex align-items-center">
+                                    <div class="text-uppercase">Order #fur10001</div>
+                                    <div class="green-label ms-auto text-uppercase">cod</div>
+                                </div>
+                                <div class="fs-8">Products <%-orderData[orderData.length-2].products.item.length%></div>
+                                <div class="fs-8">22 August, 2020 | 12:05 PM</div>
+                                <div class="rating d-flex align-items-center pt-1">
+                                    <img src="https://www.freepnglogos.com/uploads/like-png/like-png-hand-thumb-sign-vector-graphic-pixabay-39.png"
+                                        alt=""><span class="px-2">Rating:</span>
+                                        <div id="full-stars-example-two">
+                                            <div class="rating-group">
+                                                <label aria-label="1 star" class="rating__label" for="rating3-1"><i class="rating__icon rating__icon--star fas fa-star s1"></i></label>
+                                                <input class="rating__input" name="rating3" id="rating3-1" value="1" type="radio">
+                                                <label aria-label="2 stars" class="rating__label" for="rating3-2"><i class="rating__icon rating__icon--star fas fa-star s2"></i></label>
+                                                <input class="rating__input" checked name="rating3" id="rating3-2" value="2" type="radio">
+                                                <label aria-label="3 stars" class="rating__label" for="rating3-3"><i class="rating__icon rating__icon--star fas fa-star s3"></i></label>
+                                                <input class="rating__input" name="rating3" id="rating3-3" value="3" type="radio">
+                                                <label aria-label="4 stars" class="rating__label" for="rating3-4"><i class="rating__icon rating__icon--star fas fa-star s4"></i></label>
+                                                <input class="rating__input" name="rating3" id="rating3-4" value="4" type="radio">
+                                                <label aria-label="5 stars" class="rating__label" for="rating3-5"><i class="rating__icon rating__icon--star fas fa-star s5"></i></label>
+                                                <input class="rating__input" name="rating3" id="rating3-5" value="5" type="radio">
+                                            </div>
+                                          </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-8">
+                            <div class="d-sm-flex align-items-sm-start justify-content-sm-between">
+                                <div class="status">Status : Delivered</div>
+                                <div class="btn btn-primary text-uppercase">order info</div>
+                            </div>
+                            <div class="progressbar-track">
+                                <ul class="progressbar">
+                                    <li id="step-1" class="text-muted green">
+                                        <span class="fas fa-gift"></span>
+                                    </li>
+                                    <li id="step-2" class="text-muted">
+                                        <span class="fas fa-check"></span>
+                                    </li>
+                                    <li id="step-3" class="text-muted">
+                                        <span class="fas fa-box"></span>
+                                    </li>
+                                    <li id="step-4" class="text-muted">
+                                        <span class="fas fa-truck"></span>
+                                    </li>
+                                    <li id="step-5" class="text-muted">
+                                        <span class="fas fa-box-open"></span>
+                                    </li>
+                                </ul>
+                                <div id="tracker"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div><%}%>
+            </div>
+        </div>
+    </div>
+
+</div>
+<script>
+    // document.getElementById('dash').innerHTML= document.getElementById('order').innerHTML
+</script>
+
+<%- include ('../layouts/footer.ejs') %>

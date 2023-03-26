@@ -1,0 +1,140 @@
+<%- include ('../layouts/adminHeader.ejs') %>
+
+        <div class="layout-page">
+
+          <div ><form action="/admin/editProducts?id=<%-product._id%>" method="post" enctype="multipart/form-data">
+            <div class="content-wrapper">
+            <div class="container-xxl flex-grow-1 container-p-y">
+            <div class="card mb-4">
+              <h5 class="card-header">EDIT PRODUCT</h5>
+              <div class="card-body">
+                <div class="mb-3 row">
+                  <label for="html5-text-input" class="col-md-2 col-form-label">Product name</label>
+                  <div class="col-md-10">
+                    <input class="form-control" type="text" value="<%-product.name%>" id="html5-text-input" name="name" />
+                  </div>
+                </div>
+                <div class="mb-3 row">
+                  <label for="html5-number-input" class="col-md-2 col-form-label">Quantity</label>
+                  <div class="col-md-10">
+                    <input class="form-control" type="number" value="<%-product.stock%>" id="html5-number-input" name="stock" />
+                  </div>
+                </div>
+                <div class="mb-3">
+                  <label for="exampleFormControlSelect1" class="form-label">Category</label>
+                  <select class="form-select" id="exampleFormControlSelect1" aria-label="Default select example" aria-placeholder="" name="category">
+                    <option selected><%-product.category%></option>
+                    <% if(category){ %>
+                      <% for(let i=1;i <= category.length; i++){ %>
+                        <option value="<%= category[i-1].name %>">
+                          <%= category[i-1].name %>
+                        </option>
+                        <% } %>
+                      <% }else{ %>
+                        <h1>No Categories to add</h1>
+                      <% } %>  
+                  </select>
+                </div>
+                <div class="mb-3 row">
+                    <label for="exampleFormControlTextarea1" class="form-label">Product description</label>
+                  <div class="col-md-10">
+                    <textarea class="form-control" id="exampleFormControlTextarea1" value="<%-product.description%>" name="description" rows="3"><%-product.description%></textarea>
+                  </div>
+                </div>
+                <div class="mb-3 row">
+                  <label for="html5-number-input" class="col-md-2 col-form-label">Price</label>
+                  <div class="col-md-10">
+                    <input class="form-control" type="number" name="price" value="<%-product.price%>" id="html5-number-input" />
+                  </div>
+                </div>
+                <div class="mb-3 row">
+                  <label for="html5-date-input" class="col-md-2 col-form-label">Date</label>
+                  <div class="col-md-10">
+                    <input class="form-control" type="date" name="date" value="2021-06-18" id="html5-date-input" />
+                  </div>
+                </div>
+
+              <h5 class="card-title">Image Uploaded</h5>
+                <div class="mb-3">
+                  <div class="d-flex" id="liveImg">
+                
+                  <% for(let key of product.image){ %>
+                  <div id='<%=key %>' style="padding-right: 4px;">  
+                  <div class="d-flex align-items-center justify-content-center position-relative " style="border: 1px solid orange;border-radius: 8px;height: 85px;width: 78px;">  
+                    <button type="button" onclick="cut('<%=key %>')" class="close position-absolute z-3 top-0 end-0 bg-transparent shadow-none" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>                            
+                    <img src="/uploads/<%=key %>" class="img-thumbnail rounded" width="60px" height="60px" style="border: 4px;" alt="error">
+                  </div></div>
+                  <%}%>  </div><br> 
+                  <label for="formFileMultiple" class="form-label">Select image to upload</label>
+                  <input class="form-control" name="image" type="file" id="image" multiple accept="image/*"/>
+                  <input type="button" onclick="upload()" value="Upload">
+                </div>
+              
+              </div>
+        
+           <input type="hidden" value="<%-product._id%>" id="pId"/>
+           
+            </form>      
+          </div>
+          <div class="buy-now">
+            <button type="submit"  class="btn btn-danger btn-buy-now">SAVE PRODUCT</button>
+          </div> 
+
+<script>
+  const pId = document.getElementById('pId').value 
+  function upload() {
+    
+    const formData = new FormData();
+    for (let i = 0; i < image.files.length; i++) {
+  formData.append('image', image.files[i]);
+  formData.append('pId', pId);
+}  console.log(formData,image,image.files);
+axios.post('/admin/uploadImage', formData, {
+  headers: {
+    'Content-Type': 'multipart/form-data'
+  }
+}).then(response => {
+  console.log(response.data.newImage);
+  document.getElementById('liveImg').innerHTML=`${response.data.newImage.map(key => `
+  <div id="${key}" style="padding-right: 4px;">
+    <div class="d-flex align-items-center justify-content-center position-relative" style="border: 1px solid orange;border-radius: 8px;height: 85px;width: 78px;">
+      <button type="button" onclick="cut('${key}')" class="close position-absolute z-3 top-0 end-0 bg-transparent shadow-none" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+      <img src="/uploads/${key}" class="img-thumbnail rounded" width="60px" height="60px" style="border: 4px;" alt="error">
+    </div>
+  </div>
+`).join('')}`
+  
+}).catch(error => {
+  console.log(error);
+});
+  }
+  function cut(id) {
+    bootbox.confirm('Are you sure want to remove this image!',
+    function(result) {
+    if(result){
+    document.getElementById(id).innerHTML=''  
+    const data = {img:id , pId:pId}
+    axios.post('/admin/updateImage', data)
+    .then(res => {
+      if(res.data){
+        console.log(res.data);
+        let dialog = bootbox.dialog({
+        message: '<p class="text-center mb-0 text-success">Image Deleted Successfully..!</p>',
+        backdrop:true,closeButton: false
+        });
+        msg =''
+        dialog.init(setTimeout(()=> dialog.modal('hide'), 2000))
+      }
+    })
+    .catch(error => {
+      console.log(error);
+    })
+}
+  });
+  }
+</script>
+          <%- include ('../layouts/adminFooter.ejs') %>

@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+
+<html lang="en" class="light-style layout-menu-fixed" dir="ltr" data-theme="theme-default" data-assets-path="assets/"
+  data-template="vertical-menu-template-free">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+
+  <title>NEXGEN</title>
+
+  <meta name="description" content="" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/6.0.0/bootbox.min.js" integrity="sha512-oVbWSv2O4y1UzvExJMHaHcaib4wsBMS5tEP3/YkMP6GmkwRJAa79Jwsv+Y/w7w2Vb/98/Xhvck10LyJweB8Jsw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="/uploads/logo.png" />
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
+    rel="stylesheet" />
+
+  <link rel="stylesheet" href="/admin/assets/vendor/fonts/boxicons.css" />
+
+  <link rel="stylesheet" href="/admin/assets/vendor/css/core.css" class="template-customizer-core-css" />
+  <link rel="stylesheet" href="/admin/assets/vendor/css/theme-default.css" class="template-customizer-theme-css" />
+  <link rel="stylesheet" href="/admin/assets/css/demo.css" />
+  
+  <link rel="stylesheet" href="/admin/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
+  
+  <link rel="stylesheet" href="/admin/assets/vendor/libs/apex-charts/apex-charts.css" />
+  
+  
+  <script defer src="/admin/assets/vendor/js/helpers.js"></script>
+  
+  <script defer src="/admin/assets/js/config.js"></script>
+  <script defer src="/admin/assets/vendor/libs/popper/popper.js"></script>
+  <script defer src="/admin/assets/vendor/js/bootstrap.js"></script>
+  <script defer src="/admin/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+  
+  <script defer src="/admin/assets/vendor/js/menu.js"></script>
+  
+  
+  <script defer src="/admin/assets/vendor/libs/apex-charts/apexcharts.js"></script>
+  
+  <script defer src="/admin/assets/js/main.js"></script>
+  
+  <script defer src="/admin/assets/js/dashboards-analytics.js"></script>
+  
+  <script defer async src="https://buttons.github.io/buttons.js"></script>
+  
+  <script defer src="/admin/assets/vendor/libs/jquery/jquery.js"></script>
+  <script defer src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <style>
+    .dark-mode {
+      filter: invert(1) hue-rotate(180deg);
+    }
+
+    .inverted {
+      filter: invert(1) hue-rotate(180deg);
+    }
+
+    .blk {
+      height: 30px;
+      width: 80px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="layout-wrapper layout-content-navbar">
+    <div class="layout-container">
+      <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
+        <div class="app-brand demo">
+          <a href="/admin/dashboard" class="app-brand-link">
+            <span class="app-brand-logo demo">
+              <img src="/uploads/logo.png" height="40px" alt="logo" srcset="">
+            </span>&nbsp;&nbsp;&nbsp;
+            <span><strong>NEXGEN </strong></span>
+          </a>
+        </div>
+        <ul class="menu-inner py-1">
+          <li class="menu-item <% if(active==1){ %> active <% } %>">
+            <a href="/admin/dashboard" class="menu-link">
+              <i class="menu-icon tf-icons bx bx-home-circle"></i>
+              <div>Dashboard</div>
+
+            </a>
+          </li>
+          <li class="menu-item <% if(active==2){ %> active <% } %>">
+            <a href="/admin/users" class="menu-link">
+              <i class="menu-icon tf-icons bx bx-user"></i>
+              <div>Users</div>
+            </a>
+          </li>
+          <li class="menu-item <% if(active==3){ %> active <% } %>">
+            <a href="/admin/category" class="menu-link">
+              <i class="menu-icon tf-icons bx bx-dock-top"></i>
+              <div>Categories</div>
+            </a>
+          </li>
+          <li class="menu-item <% if(active==4){ %> active <% } %>">
+            <a href="/admin/products" class="menu-link">
+              <i class="menu-icon tf-icons bx bx-cube-alt"></i>
+              <div>Products</div>
+            </a>
+          </li>
+          <li class="menu-item <% if(active==5){ %> active <% } %>">
+            <a href="/admin/coupons" class="menu-link">
+              <i class="menu-icon tf-icons bx bx-dock-top"></i>
+              <div>Coupons</div>
+            </a>
+          </li>
+          <li class="menu-item <% if(active==6){ %> active <% } %>">
+            <a href="/admin/banners" class="menu-link">
+              <i class="menu-icon tf-icons bx bx-copy"></i>
+              <div>Banners</div>
+            </a>
+          </li>
+          <li class="menu-item <% if(active==7){ %> active <% } %>">
+            <a class="menu-link" href="/admin/orders">
+              <i class="menu-icon tf-icons bx bx-layout"></i>
+              <div>Orders</div>
+            </a>
+          </li>
+          <li class="menu-item">
+            <a  href="javascript:void(0)" class="menu-link " id="dark" onclick="myFunction()">
+              <i class="bx bx-cog menu-icon tf-icons"></i>
+              <div>dark-mode</div>
+            </a>
+          </li>
+          <li class="menu-item">
+            <a class="menu-link" href="/admin/logout">
+              <i class="bx bx-power-off menu-icon tf-icons"></i>
+              <div>Log Out</div>
+            </a>
+          </li>
+        </ul>
+      </aside>
+
+
+
+
+      <script>
+        // if (dark) {
+        //   document.getElementById('dark').click()
+        // }
+        function myFunction() {
+          let root = document.documentElement;
+          let images = document.getElementsByTagName('img')
+          root.classList.toggle("dark-mode");
+          for(let x of images){
+          x.classList.toggle("inverted");
+          }
+          if (dark) {
+            dark = 0
+          } else dark = 1
+          console.log(dark);
+        }</script>

@@ -1,0 +1,101 @@
+<%- include ('../layouts/adminHeader.ejs') %>
+
+
+        <div class="layout-page">
+          <!-- <nav
+            class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme"
+            id="layout-navbar"
+          >
+            <div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none">
+              <a class="nav-item nav-link px-0 me-xl-4" href="javascript:void(0)">
+                <i class="bx bx-menu bx-sm"></i>
+              </a>
+            </div> -->
+
+            <!-- <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
+              <div class="navbar-nav align-items-center">
+                <div class="nav-item d-flex align-items-center">
+                  <i class="bx bx-search fs-4 lh-0"></i>
+                  <input
+                    type="text"
+                    class="form-control border-0 shadow-none"
+                    placeholder="Search..."
+                    aria-label="Search..."
+                  />
+                </div>
+              </div>
+            </div> -->
+          </nav>
+
+          <div >
+            <form action="/admin/addProducts" method="post" enctype="multipart/form-data">
+            <div class="content-wrapper">
+            <div class="container-xxl flex-grow-1 container-p-y">
+              <% if(typeof message !=='undefined' ) { %>
+                <p style="color: rgb(255, 0, 0); font-weight: bold ; padding-left: 20px;"><%= message %></p>
+              <% } %>
+            <div class="card mb-4">
+              <h5 class="card-header">Add Product</h5>
+              <div class="card-body">
+                <div class="mb-3 row">
+                  <label for="html5-text-input" class="col-md-2 col-form-label">Product name</label>
+                  <div class="col-md-10">
+                    <input class="form-control" type="text" placeholder="Enter product name" id="html5-text-input" name="name"required />
+                  </div>
+                </div>
+                <div class="mb-3 row">
+                  <label for="html5-number-input" class="col-md-2 col-form-label">Quantity</label>
+                  <div class="col-md-10">
+                    <input class="form-control" type="number" placeholder="Available Quantity" id="html5-number-input" name="stock" required/>
+                  </div>
+                </div>
+                <div class="mb-3">
+                  <label for="exampleFormControlSelect1" class="form-label">Category</label>
+                  <select class="form-select" id="exampleFormControlSelect1" aria-label="Default select example" aria-placeholder="" name="category" required>
+                    <option disabled selected>select any category</option>
+                    <% if(category){ %>
+                      <% for(let i=1;i <= category.length; i++){ %>
+                        <option value="<%= category[i-1].name %>">
+                          <%= category[i-1].name %>
+                        </option>
+                        <% } %>
+                      <% }else{ %>
+                        <h1>No Categories to add</h1>
+                      <% } %>  
+                  </select>
+                </div>
+                <div class="mb-3 row">
+                    <label for="exampleFormControlTextarea1" class="form-label">Product description</label>
+                  <div class="col-md-10">
+                    <textarea class="form-control" id="exampleFormControlTextarea1" name="description" rows="3" required></textarea>
+                  </div>
+                </div>
+                <div class="mb-3 row">
+                  <label for="html5-number-input" class="col-md-2 col-form-label">Price</label>
+                  <div class="col-md-10">
+                    <input class="form-control" type="number" name="price" placeholder="product price" id="html5-number-input" required/>
+                  </div>
+                </div>
+                <!-- <div class="mb-3 row">
+                  <label for="html5-date-input" class="col-md-2 col-form-label">Date</label>
+                  <div class="col-md-10">
+                    <input class="form-control" type="date" name="date" id="html5-date-input" />
+                  </div>
+                </div> -->
+
+              <h5 class="card-title">File input</h5>
+                <div class="mb-3">
+                  <label for="formFileMultiple" class="form-label">Select image to upload</label>
+                  <input class="form-control" name="image" type="file" id="image" multiple required  accept="image/*"/>
+                </div>
+              
+              </div>
+            </div>
+            </div>
+            </div>   
+            <div class="buy-now">
+              <button type="submit"  class="btn btn-danger btn-buy-now">+ ADD PRODUCT</button>
+            </div> 
+            </form>      
+          </div>
+          <%- include ('../layouts/adminFooter.ejs') %>

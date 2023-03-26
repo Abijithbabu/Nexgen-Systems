@@ -1,0 +1,257 @@
+<%- include ('../layouts/adminHeader.ejs') %>
+    <div class="layout-page">
+        <nav class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme"
+            id="layout-navbar">
+            <div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none">
+                <a class="nav-item nav-link px-0 me-xl-4" href="javascript:void(0)">
+                    <i class="bx bx-menu bx-sm"></i>
+                </a>
+            </div>
+            <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
+                <div class="navbar-nav align-items-center">
+                    <form>
+                        <div class="nav-item d-flex align-items-center">
+                            <button style="border: 0; background-color: rgb(255, 255, 255);" type="submit"><i
+                                    class="bx bx-search fs-4 lh-0"></i></button>
+                            <input type="text" name="search" class="form-control border-0 shadow-none"
+                                placeholder="Search..." aria-label="Search..." value="<%-val%>" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </nav>
+        <% if(typeof message !=='undefined' ) { %>
+            <script>setTimeout(() => document.getElementById("addb").click(), 100)</script>
+            <%} %>
+
+                <div class="page-wrapper">
+                    <div class="content-wrapper">
+                        <div class="container-xxl flex-grow-1 container-p-y">
+                            <div class="card">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h4 class="card-title">Categories</h4>
+                                        <div class="table-responsive">
+                                            <table class="table table-hover" style="table-layout: fixed;">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col">SI NO</th>
+                                                        <th scope="col">Banner Name</th>
+                                                        <th>Banner Cover</th>
+                                                        <th>List/Unlist</th>
+                                                        <th scope="col">Actions</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <% if( banner.length> 0){ %>
+                                                        <% for(let i=0;i < banner.length; i++){ %>
+                                                            <tr>
+                                                                <td scope="row">
+                                                                    <%= i+1 %>
+                                                                </td>
+                                                                <td>
+                                                                    <%= banner[i].name %>
+                                                                </td>
+                                                                <td>
+                                                                    <img src="/uploads/<%-banner[i].image%>" alt="error" height="60px">
+                                                                </td>
+                                                                <td>
+
+                                                                    <div class="form-check form-switch">
+                                                                        <input class="form-check-input" type="checkbox"
+                                                                            role="switch" id="flexSwitchCheckDefault"
+                                                                            onchange="return listCat('<%= banner[i]._id %>')"
+                                                                            <% if(banner[i].isAvailable){ %>checked
+                                                                        <%}%> />
+                                                                            <label class="form-check-label"
+                                                                                for="flexSwitchCheckDefault">
+                                                                                
+                                                                            </label>
+                                                                    </div>
+                                                                </td>
+                                                                <td>
+
+                                                                    <a href='#' data-toggle="modal" data-target="#edit"
+                                                                        class="btn btn-primary a-btn-slide-text btn-sm"
+                                                                        onclick="edit('<%-banner[i]._id%>','<%-banner[i].name%>','<%-banner[i].description%>','<%-banner[i].url%>')" <% if(
+                                                                        banner[i].isAvailable==0){%>disabled<%}%>>
+
+                                                                            <span class="glyphicon glyphicon-edit"
+                                                                                aria-hidden="true"></span>
+                                                                            <span><strong>Edit</strong></span>
+                                                                    </a>
+                                                                    <a onclick="return confirm('Are you sure to Delete banner <%= banner[i].name %>?')"
+                                                                        href="/admin/deleteBanner?id=<%= banner[i]._id %>"
+                                                                        class="btn btn-primary btn-sm a-btn-slide-text"
+                                                                        <% if( banner[i].isAvailable==0){%>disabled
+                                                                        <%}%>>
+                                                                            <span class="glyphicon glyphicon-remove"
+                                                                                aria-hidden="true"></span>
+                                                                            <span><strong>Delete</strong></span>
+                                                                    </a>
+
+                                                                </td>
+                                                            </tr>
+                                                            <% }} else { %>
+                                                                <tr>
+                                                                    <td colspan="5">banner Not Found</td>
+                                                                </tr>
+                                                                <% } %>
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="buy-now">
+                    <button id="addb" class="btn btn-danger btn-buy-now" data-toggle="modal" data-target="#ban">
+                        <span><strong>+ ADD BANNER</strong></span></button>
+                </div>
+
+                <div class="modal fade" id="ban" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+                    aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLongTitle">ADD BANNER</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <p>Enter Banner Details</p>
+                                <form action="/admin/addBanner" method="post" enctype="multipart/form-data">
+                                    <div class="card mb-4">
+                                        <div class="mb-3 row">
+                                            <label for="html5-text-input" class="col-md-2 col-form-label">Banner
+                                                name</label>
+                                            <div class="col-md-10">
+                                                <input class="form-control" type="text" value="" id="html5-text-input"
+                                                    name="name" required />
+                                            </div>
+                                        </div>
+                                        <div class="mb-3 row">
+                                            <label for="html5-text-input" class="col-md-2 col-form-label">Banner
+                                                Url</label>
+                                            <div class="col-md-10">
+                                                <input class="form-control" type="text" id="html5-text-input" name="url"
+                                                    required />
+                                            </div>
+                                        </div>
+                                        <div class="mb-3 row">
+                                            <label for="exampleFormControlTextarea1" class="form-label">Banner
+                                                description</label>
+                                            <div class="col-md-10">
+                                                <textarea class="form-control" id="exampleFormControlTextarea1"
+                                                    name="description" required rows="3"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <div>
+                                                <label for="formFileMultiple" class="form-label">Select image to
+                                                    upload</label>
+                                                <input class="form-control" name="image" type="file" id="image"
+                                                    accept="image/*" required />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-dismiss="modal">cancel</button>
+                                        <button type="submit" class="btn btn-primary" >Save</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal fade" id="edit" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+                    aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLongTitle">EDIT BANNER</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <p>Enter Banner Details</p>
+                                <form action="/admin/editBanner" method="post" enctype="multipart/form-data">
+                                    <div class="card mb-4">
+                                        <div class="mb-3 row">
+                                            <label for="html5-text-input" class="col-md-2 col-form-label">Banner
+                                                name</label>
+                                            <div class="col-md-10">
+                                                <input class="form-control" type="text" value="" id="name"
+                                                    name="name" required />
+                                            </div>
+                                        </div>
+                                        <div class="mb-3 row">
+                                            <label for="html5-text-input" class="col-md-2 col-form-label">Banner
+                                                Url</label>
+                                            <div class="col-md-10">
+                                                <input class="form-control" type="text" id="url" name="url"
+                                                    required />
+                                            </div>
+                                        </div>
+                                        <div class="mb-3 row">
+                                            <label for="exampleFormControlTextarea1" class="form-label">Banner
+                                                description</label>
+                                            <div class="col-md-10">
+                                                <textarea class="form-control" id="description"
+                                                    name="description" required rows="3"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <div>
+                                                <label for="formFileMultiple" class="form-label">Select image to
+                                                    upload</label>
+                                                <input class="form-control" name="image" type="file" id="image"
+                                                    accept="image/*"  />
+                                            </div>
+                                        </div>
+                                        <input type="hidden" id="bId" name="id">
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-dismiss="modal">cancel</button>
+                                        <button type="submit" class="btn btn-primary" >Save</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+<script>
+  function edit(id,name,desc,url) {
+    document.getElementById('name').value=name
+    document.getElementById('description').value=desc
+    document.getElementById('url').value=url
+    document.getElementById('bId').value=id
+  }
+  function listCat(param) {
+  console.log(param);
+  data = { id:param}
+  axios.post('/admin/listBanner', data)
+    .then(res => {
+      if(res.data.state){   
+        mesg ='<p class="text-center mb-0 text-success">Banner Listed Successfully...!</p>'
+      }else{
+        mesg ='<p class="text-center mb-0 text-danger">Banner Unlisted Successfully...!</p>'
+      }
+      let dialog = bootbox.dialog({ message: mesg , backdrop:true,closeButton: false});
+         dialog.init(setTimeout(()=> dialog.modal('hide'), 2000))
+  })
+    .catch(error => {
+      console.log(error);
+    })
+}              
+</script>
+
+<%- include ('../layouts/adminFooter.ejs') %>

@@ -1,0 +1,201 @@
+<%- include ('../layouts/adminHeader.ejs') %>
+
+  <div class="layout-page">
+    <nav class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme"
+      id="layout-navbar">
+      <div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none">
+        <a class="nav-item nav-link px-0 me-xl-4" href="javascript:void(0)">
+          <i class="bx bx-menu bx-sm"></i>
+        </a>
+      </div>
+      <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
+        <!-- Search -->
+        <div class="navbar-nav align-items-center">
+          <form>
+            <div class="nav-item d-flex align-items-center">
+              <button style="border: 0; background-color: rgb(255, 255, 255);" type="submit"><i
+                  class="bx bx-search fs-4 lh-0"></i></button>
+              <input type="text" name="search" class="form-control border-0 shadow-none" placeholder="Search..."
+                aria-label="Search..." value="<%-val%>" />
+            </div>
+          </form>
+        </div>
+      </div>
+    </nav>
+    <% if(typeof message !=='undefined' ) { %>
+      <script>setTimeout(() => document.getElementById("addb").click(), 100)</script>
+      <%} %>
+
+        <div class="page-wrapper">
+          <div class="content-wrapper">
+            <div class="container-xxl flex-grow-1 container-p-y">
+              <div class="card">
+                <div class="card">
+                  <div class="card-body">
+                    <h4 class="card-title">Coupons</h4>
+                    <div class="table-responsive">
+                      <table class="table table-hover  " style="table-layout: fixed;font-size: small;">
+                        <thead>
+                          <tr>
+                            <th scope="col">SI NO</th>
+                            <th scope="col">Coupon Name</th>
+                            <th scope="col">Discount</th>
+                            <th scope="col">max-discount</th>
+                            <th scope="col">Min-value</th>
+                            <th >List/Unlist</th>
+                            <th scope="col">Actions</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <% if( coupon.length> 0){ %>
+                            <% for(let i=0;i <coupon.length; i++){ %>
+                              <tr 
+                                <% if( coupon[i].isAvailable == 0){%> style="background-color:rgba(178, 171, 171, 0.212)" <%}%>
+                                >
+                                <td scope="row">
+                                  <%= i+1 %>
+                                </td>
+                                <td>
+                                  <%= coupon[i].name %>
+                                </td>
+                                <td>
+                                    <%= coupon[i].discount %> %
+                                  </td>
+                                  <td>
+                                    ₹ <%= coupon[i].max %> 
+                                  </td>
+                                  <td>
+                                    ₹ <%= coupon[i].min %> 
+                                  </td>
+                                  <td>
+                                    <div class="form-check form-switch">
+                                      <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault" onchange="return listCat('<%= coupon[i]._id %>')" <% if(coupon[i].isAvailable){ %>checked<%}%> />
+                                      <label class="form-check-label" for="flexSwitchCheckDefault">
+                                      </label>
+                                    </div>
+                                  </td>
+                                <td>
+                                  <button class="btn btn-primary a-btn-slide-text btn-sm rounded " data-toggle="modal" data-target="#edit" onclick="edit('<%-coupon[i]._id%>','<%-coupon[i].name%>','<%-coupon[i].discount%>','<%-coupon[i].max%>','<%-coupon[i].min%>')"<% if( coupon[i].isAvailable == 0){%>disabled<%}%>>EDIT</button>
+                            
+                                     
+                                </td>
+                              </tr>
+                              <% }} else { %>
+                                <tr>
+                                  <td colspan="5">coupon Not Found</td>
+                                </tr>
+                                <% } %>
+
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal fade" id="add" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+          aria-hidden="false">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">ADD COUPON</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <form method="post" action="/admin/addCoupon">
+                <div class="modal-body">
+                  <label class="form-label" for="form3Example3c"></label>
+                  <label for="form3Example3c" class="form-label">Coupon name</label>
+                  <input type="text" class="form-control" name="name"  required /> 
+                  <label for="form3Example3c" class="form-label">Coupon Discount</label>
+                  <input type="text" class="form-control" name="discount"  required /> 
+                  <label for="form3Example3c" class="col-md-2 col-form-label">Maximum Discount</label>
+                  <input type="number" class="" name="maxDiscount"  required /> <br>
+                  <label for="form3Example3c" class="col-md-2 col-form-label">Minimum purchase value</label>
+                  <input type="number" class="" name="minValue"  required /> 
+
+                  <% if(typeof message !=='undefined' ) { %>
+                    <p style="color: rgb(255, 0, 0); font-weight: bold">
+                      <%= message %>
+                    </p>
+                    <% } %>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">cancel</button>
+                  <button type="submit" class="btn btn-primary">Confirm</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+        <div class="modal fade" id="edit" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+        aria-hidden="false">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLongTitle">EDIT COUPON</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <form method="post" action="/admin/editCoupon">
+              <div class="modal-body">
+                <label class="form-label" for="form3Example3c"></label>
+                <label for="form3Example3c" class="form-label">Coupon name</label>
+                <input type="text" class="form-control" id="name" name="name"  required /> 
+                <label for="form3Example3c" class="form-label">Coupon Discount</label>
+                <input type="text" class="form-control" id="discount" name="discount"  required /> 
+                <label for="form3Example3c" class="col-md-2 col-form-label">Maximum Discount</label>
+                <input type="number" class="" name="maxDiscount" id="max" required /> <br>
+                <label for="form3Example3c" class="col-md-2 col-form-label">Minimum purchase value</label>
+                <input type="number" class="" name="minValue" id="min" required /> 
+                <input type="hidden" id="cId" name="id">
+                <% if(typeof message !=='undefined' ) { %>
+                  <p style="color: rgb(255, 0, 0); font-weight: bold">
+                    <%= message %>
+                  </p>
+                  <% } %>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">cancel</button>
+                <button type="submit" class="btn btn-primary">Confirm</button>
+              </div>
+          </div>
+        </div>
+      </div>
+   
+        <div class="buy-now">
+          <button id="addb" class="btn btn-danger btn-buy-now"data-toggle="modal" data-target="#add">+ ADD COUPON</button>
+        </div>
+
+<script>
+    function edit(id,name,discount,max,min) {
+      document.getElementById('name').value=name
+      document.getElementById('discount').value=discount
+      document.getElementById('max').value=max
+      document.getElementById('min').value=min
+      document.getElementById('cId').value=id
+    }
+
+  function listCat(param) {
+  console.log(param);
+  data = { id:param}
+  axios.post('/admin/listCoupon', data)
+    .then(res => {
+      if(res.data.state){   
+        mesg ='<p class="text-center mb-0 text-success">Coupon Listed Successfully...!</p>'
+      }else{
+        mesg ='<p class="text-center mb-0 text-danger">Coupon Unlisted Successfully...!</p>'
+      }
+      let dialog = bootbox.dialog({ message: mesg , backdrop:true,closeButton: false});
+         dialog.init(setTimeout(()=> dialog.modal('hide'), 2000))
+  })
+    .catch(error => {
+      console.log(error);
+    })
+}
+</script>
+        <%- include ('../layouts/adminFooter.ejs') %>

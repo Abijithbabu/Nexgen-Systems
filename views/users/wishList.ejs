@@ -1,0 +1,136 @@
+<%- include('../layouts/header.ejs') %>
+
+    <!--====== Main App ======-->
+    <div id="app">
+
+
+        <!--====== App Content ======-->
+        <div class="app-content">
+
+            <!--====== Section 1 ======-->
+            <div class="u-s-p-y-60">
+
+                <!--====== Section Content ======-->
+                <div class="section__content">
+
+                </div>
+            </div>
+            <div class="u-s-p-b-60">
+
+                <!--====== Section Intro ======-->
+                <div class="section__intro u-s-m-b-60">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="section__text-wrap">
+                                    <h1 class="section__heading u-c-secondary">Wishlist</h1>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--====== End - Section Intro ======-->
+
+
+                <!--====== Section Content ======-->
+                <div class="section__content">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+
+                                <% if(products){ %>
+                                    <% if(products.item.length>0){ %>
+                              <% for(let key of products.item){ %>
+                                <div class="w-r u-s-m-b-30">
+                                    <div class="w-r__container">
+                                        <div class="w-r__wrap-1">
+                                            <div class="w-r__img-wrap">
+
+                                                <img class="u-img-fluid" src="/uploads/<%=key.productId.image[0] %>" alt=""></div>
+                                            <div class="w-r__info">
+
+                                                <span class="w-r__name">
+
+                                                    <a href="/productDetail?id=<%-key.productId._id%>"><%= key.productId.name %></a></span>
+
+                                                <span class="w-r__category">
+
+                                                    <a href="shop-side-version-2.html"><%= key.productId.category %></a></span>
+
+                                                <span class="w-r__price">$125.00
+
+                                                    <span class="w-r__discount">$160.00</span></span></div>
+                                        </div>
+                                        <div class="w-r__wrap-2">
+
+                                            <a class="w-r__link btn--e-brand-b-2" data-modal="modal" data-modal-id="#add-to-cart" href="/addToCart?id=<%=key.productId._id%>">ADD TO CART</a>
+
+                                            <a class="w-r__link btn--e-transparent-platinum-b-2" href="/productDetail?id=<%-key.productId._id%>">VIEW</a>
+
+                                            <a class="w-r__link btn--e-transparent-platinum-b-2" href="/deleteFromWishList?id=<%= key.productId._id %>">REMOVE</a></div>
+                                    </div>
+                                </div>
+                                <%} }else{ %>
+                                    <div class="col-lg-12">
+                                    <div class="text-dark justify-content-center">
+                                        <h2>Nothing in Wishlist</h2>
+                                    </div>
+                                    </div><br><br>
+                                <%} }else{ %>
+                                    <div class="col-lg-12">
+                                    <div class="text-dark justify-content-center">
+                                        <h2>Looks Like You're not signned in</h2>
+                                        <a href="/login"><i class="fas fa-lock u-s-m-r-6"></i><span>Signin Now</span></a>
+                                    </div></div><br><br>    
+                                <%}%>
+                                <div class="col-lg-12">
+                                    <div class="route-box">
+                                        <div class="route-box__g">
+    
+                                            <a class="route-box__link" href="/products"><i class="fas fa-long-arrow-alt-left"></i>
+    
+                                                <span>CONTINUE SHOPPING</span></a></div>
+                                        <!-- <div class="route-box__g">
+    
+                                            <a class="route-box__link" href="wishlist.html"><i class="fas fa-trash"></i>
+    
+                                                <span>CLEAR WISHLIST</span></a></div> -->
+                                    </div>
+                                </div>
+                                <!--====== End - Wishlist Product ======-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+
+
+                            <script src="js/vendor.js"></script>
+
+    <!--====== jQuery Shopnav plugin ======-->
+    <script src="js/jquery.shopnav.js"></script>
+
+    <!--====== App ======-->
+    <script src="js/app.js"></script>
+
+    <!--====== Noscript ======-->
+    <noscript>
+        <div class="app-setting">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="app-setting__wrap">
+                            <h1 class="app-setting__h1">JavaScript is disabled in your browser.</h1>
+
+                            <span class="app-setting__text">Please enable JavaScript in your browser or upgrade to a JavaScript-capable browser.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </noscript>
+    <%- include ('../layouts/footer.ejs') %>

@@ -1,0 +1,227 @@
+<%- include ('../layouts/header.ejs') %>
+
+
+  <section id="hero" class="d-flex align-items-center justify-content-center">
+    <div class="container" data-aos="fade-up">
+
+      <div class="row justify-content-center" data-aos="fade-up" data-aos-delay="150">
+        <div class="col-xl-6 col-lg-8">
+          <h1><a href="/products" style="color: aliceblue;" id="banH">NEXGEN SYSTEMS</a></h1>
+          <h2><a href="/products" style="color: aliceblue;" id="banS">.Reload Your Work space</a></h2>
+        </div>
+      </div>
+
+      <div class="row gy-4 mt-5 justify-content-center" data-aos="zoom-in" data-aos-delay="250">
+        <div class="col-xl-2 col-md-4">
+          <div class="icon-box">
+            <i class="ri-store-line"></i>
+            <h3><a href="/products?category=2">mother board</a></h3>
+          </div>
+        </div>
+        <div class="col-xl-2 col-md-4">
+          <div class="icon-box">
+            <i class="ri-bar-chart-box-line"></i>
+            <h3><a href="/products?category=1">smps</a></h3>
+          </div>
+        </div>
+        <div class="col-xl-2 col-md-4">
+          <div class="icon-box">
+            <i class="ri-calendar-todo-line"></i>
+            <h3><a href="/products?category=4">ram</a></h3>
+          </div>
+        </div>
+        <div class="col-xl-2 col-md-4">
+          <div class="icon-box">
+            <i class="ri-paint-brush-line"></i>
+            <h3><a href="/products?category=5">ssd</a></h3>
+          </div>
+        </div>
+        <div class="col-xl-2 col-md-4">
+          <div class="icon-box">
+            <i class="ri-database-2-line"></i>
+            <h3><a href="/products?category=7">Graphic card</a></h3>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <main id="main">
+
+    <section id="features" class="features">
+      <div class="container" data-aos="fade-up">
+
+        <div class="row">
+          <div class="image col-lg-6"  data-aos="fade-right">  
+            <iframe width="620" height="415"
+            src="https://www.youtube.com/embed/-BrI1DoSupE?autoplay=1&mute=1">
+            </iframe>
+          </div>
+          <div class="col-lg-2" data-aos="fade-left" data-aos-delay="100"></div>
+          <div class="col-lg-4" data-aos="fade-left" data-aos-delay="100">
+        
+            <div class="icon-box mt-5" data-aos="zoom-in" data-aos-delay="150">
+              <i class="bx bx-cube-alt"></i>
+              <h4>Build Strong</h4>
+              <p>Nexgen Rigs Provides the strong and stylish PC Rigs</p>
+            </div>
+            <div class="icon-box mt-4" data-aos="zoom-in" data-aos-delay="150">
+              <i class="bx bx-receipt"></i>
+              <h4>24/7 Support</h4>
+              <p>Always there for you..! Nexgen provides 24/7 coustomer service all over India</p>
+            </div>
+            <div class="icon-box mt-4" data-aos="zoom-in" data-aos-delay="150">
+              <i class="bx bx-shield"></i>
+              <h4>100% Trust</h4>
+              <p>Nexgen Ensures 4-way Quality Checks on Every Single Product before delivering to you. </p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+    <section id="services" class="services">
+      <div class="container" data-aos="fade-up">
+
+        <div class="section-title">
+          <h2>FEATURED</h2><br>
+          <p>Grab the perfect hardware for your workflow.</p>
+        </div>
+
+        <div class="row">
+          
+          <div class="col-lg-4 col-md-6 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="100" >
+            <div class="icon-box">
+              <div class="icon"><i class="bx bx-file"></i></div>
+              <h4><a href="/productDetail?id=<%-product[0]._id%>"><%-product[0].name%></a></h4>
+              <p><%-product[0].description%></p>
+            </div>
+          </div>
+
+          <div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4 mt-md-0" data-aos="zoom-in" data-aos-delay="200">
+            <div class="icon-box">
+              <div class="icon"><i class="bx bx-file"></i></div>
+              <h4><a href="/productDetail?id=<%-product[0]._id%>"><%-product[1].name%></a></h4>
+              <p><%-product[1].description%></p>
+            </div>
+          </div>
+
+          <div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4 mt-lg-0" data-aos="zoom-in" data-aos-delay="300">
+            <div class="icon-box">
+              <div class="icon"><i class="bx bx-tachometer"></i></div>
+              <h4><a href="/productDetail?id=<%-product[0]._id%>"><%-product[2].name%></a></h4>
+              <p><%-product[2].description%></p>
+            </div>
+          </div>
+
+          <div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4" data-aos="zoom-in" data-aos-delay="100">
+            <div class="icon-box">
+              <div class="icon"><i class="bx bx-world"></i></div>
+              <h4><a href="/productDetail?id=<%-product[0]._id%>"><%-product[3].name%></a></h4>
+              <p><%-product[3].description%></p>
+            </div>
+          </div>
+
+          <div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4" data-aos="zoom-in" data-aos-delay="200">
+            <div class="icon-box">
+              <div class="icon"><i class="bx bx-slideshow"></i></div>
+              <h4><a href="/productDetail?id=<%-product[0]._id%>"><%-product[4].name%></a></h4>
+              <p><%-product[4].description%></p>
+            </div>
+          </div>
+
+          <div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4" data-aos="zoom-in" data-aos-delay="300">
+            <div class="icon-box">
+              <div class="icon"><i class="bx bx-arch"></i></div>
+              <h4><a href="/productDetail?id=<%-product[0]._id%>"><%-product[5].name%></a></h4>
+              <p><%-product[5].description%></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section id="cta" class="cta">
+      <div class="container" data-aos="zoom-in">
+
+        <div class="text-center">
+          <h3>Ready for your Dream PC</h3>
+          <p>Join Our Army. Plan Your Coustom PC. Start Shopping. Grab the perfect hardware for your workflow. Build with Us.  </p>
+          <a class="cta-btn" href="/products">Order Now</a>
+        </div>
+      </div>
+    </section>
+   
+    <section id="team" class="team">
+      <div class="container" data-aos="fade-up">
+
+        <div class="section-title">
+          <h2>shop now</h2>
+          <p>Featured Products</p>
+        </div>
+
+        <div class="row">
+          <% if(product.length>3){
+          for(i=0;i<4;i++){%>
+          <div class="col-lg-3 col-md-6 d-flex align-items-stretch">
+            <div class="member" data-aos="fade-up" data-aos-delay="100">
+              <div class="member-img">
+                <img src="/uploads/<%-product[i].image[0]%>" class="img-fluid" alt="">
+                <div class="social">
+                  <a href="/productDetail?id=<%-product[i]._id%>"><i class="fa fa-cart-shopping"></i></a>
+                  <!-- <a href=""><i class="bi bi-facebook"></i></a>
+                  <a href=""><i class="bi bi-instagram"></i></a>
+                  <a href=""><i class="bi bi-linkedin"></i></a> -->
+                </div>
+              </div>
+              <div class="member-info">
+                <h4><%-product[i].name%></h4>
+                <span><%-product[i].description%></span>
+              </div>
+            </div>
+          </div>
+         <%}}%>
+        </div>
+      </div>
+    </section>
+  <% for(i=0;i<banner.length;i++){%>
+   <input type="hidden" value='<%-banner[i].image %>' id="<%-i %>">
+   <input type="hidden" value="<%-banner[i].name%>" id="b<%-i %>">
+   <input type="hidden" value="<%-banner[i].description%>" id="s<%-i %>">
+   <input type="hidden" value="<%-banner[i].url%>" id="url<%-i%>" />
+  <%}%>
+  </main>
+  <script>
+    const bHead = document.getElementById('banH')
+    const sHead = document.getElementById('banS')
+    document.getElementById('hero').style = `
+  background-image: url(/uploads/${document.getElementById(0).value});
+  width: 100%;
+  height: 100vh;
+  background-size: cover;
+  position: relative;
+`    
+      bHead.innerHTML = document.getElementById('b'+0).value
+      sHead.innerHTML = document.getElementById('s'+0).value
+      bHead.href=document.getElementById('url'+0).value
+      sHead.href=document.getElementById('url'+0).value
+    let i = 1 
+    n = '<%-banner.length%>'
+    console.log(n);
+    setInterval(()=>{
+      bHead.innerHTML = document.getElementById('b'+i).value
+      sHead.innerHTML = document.getElementById('s'+i).value
+      bHead.href=document.getElementById('url'+i).value
+      sHead.href=document.getElementById('url'+i).value
+      banner = document.getElementById(i).value
+      i++ 
+    if(i==n){i=0}
+    imageUrl = `/uploads/${banner}`;
+    document.getElementById('hero').style = `
+    width: 100%;
+    background-image: url(${imageUrl});
+    background-size: cover;
+    height: 100vh;
+    position: relative;
+    `;},4000)
+  </script>
+  <%- include ('../layouts/footer.ejs') %>
+

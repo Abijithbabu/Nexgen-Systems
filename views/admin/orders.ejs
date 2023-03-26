@@ -1,0 +1,208 @@
+<%- include ('../layouts/adminHeader.ejs') %>
+
+  <div class="layout-page">
+    <nav class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme"
+      id="layout-navbar">
+      <div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none">
+        <a class="nav-item nav-link px-0 me-xl-4" href="javascript:void(0)">
+          <i class="bx bx-menu bx-sm"></i>
+        </a>
+      </div>
+      <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
+        <!-- Search -->
+        <div class="navbar-nav align-items-center">
+          <form>
+            <div class="nav-item d-flex align-items-center">
+              <button style="border: 0; background-color: rgb(255, 255, 255);" type="submit"><i
+                  class="bx bx-search fs-4 lh-0"></i></button>
+              <input type="text" name="search" class="form-control border-0 shadow-none" placeholder="Search..."
+                aria-label="Search..." value="<%-val%>" />
+            </div>
+          </form>
+        </div>
+      </div>
+    </nav>
+    <% if(typeof message !=='undefined' ) { %>
+      <script>setTimeout(() => document.getElementById("addb").click(), 100)</script>
+      <%} %>
+
+        <div class="page-wrapper">
+          <div class="content-wrapper">
+            <div class="container-xxl flex-grow-1 container-p-y">
+              <div class="card">
+                <div class="card">
+                  <div class="card-body">
+                    <h4 class="card-title">Categories</h4>
+                    <div class="table-responsive">
+                      <table id='ordersTable' class="table table-hover  " style="table-layout: fixed;font-size: smaller;">
+                        <thead>
+                          <tr>
+                            <th scope="col">SI NO</th>
+                            <th scope="col">order Id</th>
+                            <th scope="col">Username</th>
+                            <th scope="col">Payment</th>
+                            <th scope="col">Amount</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Actions</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <% if( orders.length> 0){ %>
+                            <% for(let i=0;i < orders.length; i++){ %>
+                              <tr>
+                                <td scope="row">
+                                  <%= i + 1 %>
+                                </td>
+                                <td style="font-size: x-small;">
+                                  #<%= orders[i]._id %>
+                                </td>
+                                <td>
+                                    <%= orders[i].userId.name %>
+                                </td>
+                                <td>
+                                  <%= orders[i].payment %>
+                              </td>
+                              <td>
+                                ₹ <%= orders[i].amount %>.00
+                            </td>
+                                <td>
+                                  <span class=" bg-label-<% if(orders[i].status =='Placed'){%>primary
+                                    <%}else if(orders[i].status =='Accepted'){%>info
+                                    <%}else if(orders[i].status =='Packed'){%>info
+                                    <%}else if(orders[i].status =='Shipped'){%>info
+                                    <%}else if(orders[i].status =='Delivered'){%>success
+                                    <%}else if(orders[i].status =='Cancelled'){%>danger<%}%>    
+                                       me-1"><%=orders[i].status %></span>
+                                </td>
+                                <td>
+                                  <a href="/admin/orderDetails?id=<%= orders[i]._id %>"
+                                  class="btn btn-primary a-btn-slide-text btn-xs rounded"
+                                  onchange="edit('<%= orders[i]._id %>')">
+
+                                      <span class="glyphicon glyphicon-edit"
+                                          aria-hidden="true"></span>
+                                      <span><strong>view details</strong></span>
+                              </a>
+                              <!-- <a href="#" onclick="return confirm('do you want to change availability of <%= orders[i]._id %>?')"
+                                  class="btn btn-primary a-btn-slide-text btn-sm">
+                                      <span class="glyphicon glyphicon-edit"
+                                          aria-hidden="true"></span>
+                                      <span><strong>cancel Order</strong></span>
+                              </a>                                 -->
+                            </td>
+                              </tr>
+                              <% }} else { %>
+                                <tr>
+                                  <td colspan="5">orders Not Found</td>
+                                </tr>
+                                <% } %>
+
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+       
+        <div class="buy-now">
+          <button type="button" id="downloadPdfBtn"  class="btn btn-danger btn-buy-now">DOWNLOAD</button>
+        </div> 
+  
+
+      <!-- <script>
+        function send(e){
+          let searchResults =document.getElementById('searchResults')
+          fetch('category', {
+            method: 'POST',
+            headers:{'Content-Type':'application/json'},
+            body: JSON.stringify({payload:e.value})
+          }).then(res => res.json()).then(data=>{
+            let payload = data.payload;
+            searchResults.innerHTML = '';
+            if(payload.length < 1){
+              searchResults.innerHTML = '<p>sorry nothing found </p>';
+            }
+          })
+        }
+        function edit(id) {
+          e_id = id
+        }
+function sen(val){
+  $.ajax({
+      url:'http://localhost:3000/admin/name',
+      data:$("#submit-form").serialize(),
+      method:"post",
+      success:function (response){
+          alert("Form submitted successfully !!")
+      },
+      error:function (err){
+          alert("Something went Wrong")
+      }
+   })
+}
+function send(productId, qty) {
+  let searchResults =document.getElementById('search').value
+  console.log(searchResults);
+        $.ajax({
+          url: '/category',
+          type: 'POST',
+          data: { search:searchResults },
+          success: function(data) {
+            // update subtotal and grand total
+            console.log(data);
+            $('#searchResult').text(data.subtotal);
+          },
+          error: function(jqXHR, textStatus, errorThrown) {
+            console.log(textStatus, errorThrown);
+          }
+        });
+      }
+       </script>   -->
+       <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.6/jspdf.plugin.autotable.min.js"></script>
+
+
+
+<!-- SheetJS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.3/xlsx.full.min.js"></script>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+  // Download as PDF
+  // console.log(jsPDF);
+document.getElementById('downloadPdfBtn').addEventListener('click', function() {
+  // Get the table element
+
+
+  var doc = new jsPDF()
+    doc.autoTable({ html: '#ordersTable' })
+    doc.save('sales.pdf')
+});
+
+// Download as Excel
+document.getElementById('downloadExcelBtn').addEventListener('click', function() {
+  // Get the table element
+  var table = document.getElementById('ordersTable');
+
+  // Convert the table data to a worksheet object
+  var worksheet = XLSX.utils.table_to_sheet(table);
+
+  // Create a new workbook and add the worksheet
+  var workbook = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(workbook, worksheet, 'Sales');
+
+  // Save the Excel file
+  XLSX.writeFile(workbook, 'sales.xlsx');
+});
+
+</script>
+        <%- include ('../layouts/adminFooter.ejs') %>

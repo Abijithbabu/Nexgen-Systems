@@ -1,0 +1,96 @@
+<%- include ('../layouts/adminHeader.ejs') %>
+
+  <div class="layout-page">
+    <nav class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme"
+      id="layout-navbar">
+      <div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none">
+        <a class="nav-item nav-link px-0 me-xl-4" href="javascript:void(0)">
+          <i class="bx bx-menu bx-sm"></i>
+        </a>
+      </div>
+
+      <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
+        <!-- Search -->
+        <div class="navbar-nav align-items-center">
+          <div class="nav-item d-flex align-items-center">
+            <i class="bx bx-search fs-4 lh-0"></i>
+            <input type="text" class="form-control border-0 shadow-none" placeholder="Search..."
+              aria-label="Search..." />
+          </div>
+        </div>
+        <!-- /Search -->
+      </div>
+    </nav>
+    <div>
+      <div class="content-wrapper">
+        <div class="container-xxl flex-grow-1 container-p-y">
+          <div class="card mb-4">
+            <div class="card">
+              <div class="header">
+
+              </div>
+              <div class="content table-responsive table-full-width">
+                <table id="productlist" class="table table-hover" style="table-layout: fixed;font-size: small;">
+                  <thead>
+                    <th>SI NO</th>
+                    <th>Name</th>
+                    <th>category</th>
+                    <th>Price</th>
+                    <th>Stock</th>
+                    <th>Image</th>
+                    <th>Action</th>
+                  </thead>
+                  <tbody>
+                    <% if(products.length> 0){ %>
+                      <% for(let i=1;i <=products.length; i++){ %>
+                        <% if(products[i-1].isAvailable==1){ %>
+                          <tr>
+                            <th>
+                              <%= i %>
+                            </th>
+                            <td>
+                              <%= products[i-1].name %>
+                            </td>
+                            <td>
+                              <%= products[i-1].category %>
+                            </td>
+                            <td>
+                              <%= products[i-1].price %>
+                            </td>
+                            <td>
+                              <%= products[i-1].stock %>
+                            </td>
+                            <td>
+                              <% if(products[i-1].image) { %>
+                                <img src="/uploads/<%=products[i-1].image[0] %>" width="60px" height="60px" alt="error">
+                              <% }else{ %>
+                                  Image Not Found
+                              <% } %>
+                            </td>
+                            <td>
+                              <a href="/admin/editProducts?id=<%= products[i-1]._id %>" class="btn btn-primary a-btn-slide-text btn-xs">Edit</a>
+
+                              <a onclick="return confirm('do you want to delete?')" 
+                                href="/admin/deleteProduct?id=<%= products[i-1]._id %>"
+                                  class="btn btn-primary a-btn-slide-text btn-xs">Delete</a>
+                            </td>
+
+                          </tr>
+                          <% } %>
+                            <% } } else{ %>
+                              <tr>
+                                <td colspan="5">Products Not Found</td>
+                              </tr>
+                              <% } %>
+
+                  </tbody>
+                </table>
+
+                <div class="buy-now">
+                  <a href="/admin/addProducts"><button type="submit" class="btn btn-danger btn-buy-now">+ ADD
+                      PRODUCT</button></a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <%- include ('../layouts/adminFooter.ejs') %>
