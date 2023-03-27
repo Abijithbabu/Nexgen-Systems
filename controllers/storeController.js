@@ -157,7 +157,7 @@ const loadBanner = async (req,res)=>{
           if(req.body.status=='Cancelled' && orderData.payment!='COD'){
             const userData = await User.findOne({_id:orderData.userId})
             await User.updateOne({_id:orderData.userId},{$set:{wallet:userData.wallet + orderData.amount}})
-             console.log(userData,userData.wallet);
+             console.log('ipadde'+ userData,userData.wallet);
           }
           if(orderData){
             console.log(orderData);

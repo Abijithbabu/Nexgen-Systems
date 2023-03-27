@@ -1,6 +1,6 @@
 <%- include('../layouts/header') %>
 <!--====== Main App ======-->
-<div id="app">
+<div id="app" class="bg-white">
     
     
     <!--====== App Content ======-->
@@ -333,7 +333,7 @@
                                             </div>
                                         </div>
                                         <% }else{%>
-                                            <input type="hidden" id="payable" value="<%= products.totalPrice %>"
+                                            <input type="hidden" id="payable" value="<%= products.totalPrice %>"/>
                                         <%}%>     
                                         <div class="o-summary__section u-s-m-b-30">
                                             <div class="o-summary__box">
@@ -403,12 +403,13 @@
         </div>
     </div> 
 </div>
-
+<button id="popper" type="button"></button>
     <script src="js/vendor.js"></script>
     <script src="js/jquery.shopnav.js"></script>
     <script src="js/app.js"></script>
     <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
     <script>
+        let payment
         function val(p){
            gTotal =parseInt(document.getElementById('gTotal').value)
            value = parseInt(p)
@@ -424,6 +425,7 @@
                 document.getElementById('cash-on-delivery').setAttribute('disabled','')
                 document.getElementById('payable').value = 0 
                 console.log(document.getElementById('payable').value);
+                payment = 'wallet'
             }else {
                 document.getElementById('cash-on-delivery').checked = false
 
@@ -434,6 +436,7 @@
                 console.log(document.getElementById('payable').value);
             }
         }else{
+            payment = undefined
             document.getElementById('pay-pal').removeAttribute('disabled','')
                 document.getElementById('pay-with-card').removeAttribute('disabled','')
                 document.getElementById('cash-on-delivery').removeAttribute('disabled','')
@@ -476,12 +479,15 @@
 
     function placeOrder(){
         let data
-        console.log('k');
-        const selectedValue = document.querySelector('input[name="payment"]:checked').value;console.log('e');
-        const selectedAddress = document.querySelector('input[name="address"]:checked').value;console.log('s');
+        console.log('k'+payment);
+        const selectedValue = payment??document.querySelector('input[name="payment"]:checked').value
+        console.log('e');
+        const selectedAddress = document.querySelector('input[name="address"]:checked').value
+        console.log('s');
         const coupon = document.getElementById('coupon').value
         console.log('u');
         const total = document.getElementById('payable').value
+        const amount = document.getElementById('gTotal').value
         console.log('kesu');
         if(selectedAddress == 0){
             firstname =  document.getElementById('firstname').value
@@ -492,16 +498,16 @@
             state = document.getElementById('state').value
             pin = document.getElementById('pin').value
             mno = document.getElementById('mno').value
-            data = { payment:selectedValue,address:selectedAddress,coupon:coupon,payable:total,firstname,lastname,country,street,city,state,pin,mno}
+            data = { payment:selectedValue,address:selectedAddress,coupon:coupon,payable:total,amount,firstname,lastname,country,street,city,state,pin,mno}
         }else{
-            data = { payment:selectedValue,address:selectedAddress,coupon:coupon,payable:total}
+            data = { payment:selectedValue,address:selectedAddress,coupon:coupon,payable:total,amount}
         }
         $.ajax({
                 url: '/placeOrder',
                 type: 'POST',
                 data: data,
                 success: function (data) {
-                if(data.method=='COD'){
+                if(data.method=='COD'||data.method=='wallet'){
                     success()
                 }else{
                     var options = {
@@ -547,6 +553,7 @@ rzp.on('payment.error', function(response) {
                 }
             })
     } 
+    
      function success(){
         $.ajax({
         url: '/orderSuccess',
@@ -622,8 +629,8 @@ rzp.on('payment.error', function(response) {
        
     </style>
 
-    <div class="container">
-        <div class="row">
+    <div class="container " >
+        <div class="row mt-10 mb-10" style="padding:160px">
            <div class="col-md-6 mx-auto mt-5">
               <div class="payment">
                  <div class="payment_header">
@@ -632,7 +639,7 @@ rzp.on('payment.error', function(response) {
                  <div class="content">
                     <h1>Order Success !</h1>
                     <p>your order is succesfull thank you for shopping... !</p><br>
-                    <a href='/' id='redir'style="text-decoration: none;" ></a>
+                    <a href='/' id='redir'style="text-decoration: none;" >redirecting in 00:10 sec</a>
                  </div>
               </div>
            </div>
@@ -644,13 +651,21 @@ rzp.on('payment.error', function(response) {
             sec--;
             if (sec < 0) {
                  clearInterval(timer);
-                 document.getElementById('redir').innerHTML = '';
+                 document.getElementById('redir').innerHTML = 'Go Home';
                  document.getElementById('redir').click()
             }
-         }, 1000)}
+         }, 1000)
+         document.getElementById('popper').click()
+
+        }
     })
      }   
+     	   
     </script>
 
+    <script type="module">
+        import confetti from 'https://cdn.skypack.dev/canvas-confetti';
+        document.getElementById('popper').addEventListener('click', () =>setTimeout(()=>confetti(),1000) );
+   </script>
 
     <%- include ('../layouts/footer.ejs') %>

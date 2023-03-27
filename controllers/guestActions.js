@@ -17,7 +17,7 @@ const loadHome = async (req, res) => {
 const loadProducts = async (req, res) => {
     try {
         const categoryData = await Category.find()
-        let { search, sort, category, limit, page, ajax } = req.query
+        let { search, sort, category, limit, page,rating,ajax } = req.query
         if (!search) {
             search = ''
         }
@@ -29,6 +29,9 @@ const loadProducts = async (req, res) => {
         }
         if(!page){
             page=0
+        }
+        if(!rating){
+            rating=0
         }
         skip=page*limit
         console.log(category);
@@ -44,21 +47,21 @@ const loadProducts = async (req, res) => {
         console.log('sort ' + req.query.sort);
         console.log('category ' + arr);
         if (sort == 0) {
-            productData = await Product.find({ isAvailable:1, $and: [{ category: arr }, { price:{$gte:start,$lte:end} }, { $or: [{ name: { $regex: '' + search + ".*" } }, { category: { $regex: ".*" + search + ".*" } }] }] }).sort({$natural:-1})
+            productData = await Product.find({ isAvailable:1, $and: [{ category: arr },{star:{$gte:rating}}, { price:{$gte:start,$lte:end} }, { $or: [{ name: { $regex: '' + search + ".*" } }, { category: { $regex: ".*" + search + ".*" } }] }] }).sort({$natural:-1})
             pageCount = Math.floor(productData.length/limit)
             if(productData.length%limit >0){
                 pageCount +=1
             }
             console.log(productData.length + ' results found '+pageCount);
-            productData = await Product.find({ isAvailable:1, $and: [{ category: arr }, { price:{$gte:start,$lte:end} }, { $or: [{ name: { $regex: '' + search + ".*" } }, { category: { $regex: ".*" + search + ".*" } }] }] }).sort({$natural:-1}).skip(skip).limit(limit)
+            productData = await Product.find({ isAvailable:1, $and: [{ category: arr },{star:{$gte:rating}},  { price:{$gte:start,$lte:end} }, { $or: [{ name: { $regex: '' + search + ".*" } }, { category: { $regex: ".*" + search + ".*" } }] }] }).sort({$natural:-1}).skip(skip).limit(limit)
         } else {
-            productData = await Product.find({ isAvailable:1, $and: [{ category: arr }, { price:{$gte:start,$lte:end} }, { $or: [{ name: { $regex: '' + search + ".*" } }, { category: { $regex: ".*" + search + ".*" } }] }] }).sort({ price: sort })
+            productData = await Product.find({ isAvailable:1, $and: [{ category: arr },{star:{$gte:rating}},  { price:{$gte:start,$lte:end} }, { $or: [{ name: { $regex: '' + search + ".*" } }, { category: { $regex: ".*" + search + ".*" } }] }] }).sort({ price: sort })
             pageCount = Math.floor(productData.length/limit)
             if(productData.length%limit >0){
                 pageCount +=1
             }
             console.log(productData.length + ' results found '+pageCount);
-            productData = await Product.find({ isAvailable:1, $and: [{ category: arr }, { price:{$gte:start,$lte:end} }, { $or: [{ name: { $regex: '' + search + ".*" } }, { category: { $regex: ".*" + search + ".*" } }] }] }).sort({ price: sort }).skip(skip).limit(limit)
+            productData = await Product.find({ isAvailable:1, $and: [{ category: arr },{star:{$gte:rating}},  { price:{$gte:start,$lte:end} }, { $or: [{ name: { $regex: '' + search + ".*" } }, { category: { $regex: ".*" + search + ".*" } }] }] }).sort({ price: sort }).skip(skip).limit(limit)
         }
         console.log(productData.length + ' results found');
         if (req.session.user) { 

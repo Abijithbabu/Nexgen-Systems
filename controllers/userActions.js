@@ -83,34 +83,10 @@ const loadCheckout = async(req,res)=>{
     }
 }
 
-
 const applyCoupon = async(req,res)=>{
     const couponData = await Coupon.findOne({_id:req.body.id})
     res.send({couponData}) 
 
-}
-
-const onlinePayment = async(req,res)=>{
-    var instance = new RazorPay({
-        key_id:process.env.KEY_ID,
-        key_secret:process.env.KEY_SECRET
-      })
-      let razorpayOrder = await instance.orders.create({
-        amount: req.body.payable*100,
-        currency:'INR',
-        receipt:order._id.toString()
-      })
-      console.log('order Order created', razorpayOrder);
-      res.render("users/online_pay", {
-        userId:req.session.user_id,
-        order_id:razorpayOrder.id,
-        total:  req.body.amount,
-        session: req.session,
-        key_id: process.env.key_id,
-        user: userData,
-        order: order,
-        orderId: order._id.toString()   
-      });
 }
 
 let order
@@ -137,12 +113,19 @@ const placeOrder = async(req,res)=>{
             userId:req.session.user_id,
             address:addrData,
             payment:req.body.payment,
-            amount: req.body.payable,
+            amount: req.body.amount,
             offer:couponData.discount,
             products:userData.cart
         })
         if(req.body.payment=='COD'){
-            res.send({method:'COD'})
+            res.send({method:req.body.payment})
+        }else if(req.body.payment=='wallet'){
+            let bal = userData.wallet
+            if(userData.wallet>req.body.amount){
+                bal = userData.wallet-req.body.amount
+            }else{ bal = 0 }  
+            await User.updateOne({_id:req.session.user_id},{$set:{wallet:bal}})  
+            res.send({method:req.body.payment})
         }else{
             var instance = new RazorPay({
                 key_id:process.env.KEY_ID,
@@ -172,6 +155,9 @@ const placeOrder = async(req,res)=>{
 
 const saveOrder = async (req,res)=>{
     await order.save(); 
+    for(let x of order.products.item){
+       await Product.updateOne({_id:x.productId},{$inc:{stock:-x.qty}})
+    }
     await User.updateOne({_id:req.session.user_id},{$unset:{cart:1}})
     console.log('order successfull');
     res.send({success:true})

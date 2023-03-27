@@ -1,6 +1,6 @@
 <%- include('../layouts/header.ejs') %>
     <!--====== Main App ======-->
-    <div id="app">
+    <div id="app" class="bg-white">
 
 
         <!--====== App Content ======-->
@@ -79,7 +79,7 @@
 
                                                                 <span class="input-counter__minus fas fa-minus"></span>
     
-                                                                <input class="input-counter__text input-counter--text-primary-style" value="<%= key.qty %>" onchange="update(this.value ,'<%= key.productId._id %>')" type="text" data-min="1" data-max="1000">
+                                                                <input class="input-counter__text input-counter--text-primary-style" value="<%= key.qty %>" onchange="update(this.value ,'<%= key.productId._id %>')" type="text" data-min="1" data-max="<%= key.productId.stock %>">
     
                                                                 <span class="input-counter__plus fas fa-plus"></span></div>
                                                         <!--====== End - Input Counter ======-->
@@ -88,7 +88,7 @@
                                                 <td>
                                                     <div class="table-p__del-wrap">
 
-                                                        <a class="far fa-trash-alt table-p__delete-link" href="/removeFromCart?id=<%= key.productId._id %>">remove</a></div>
+                                                        <a class="far fa-trash-alt table-p__delete-link" href="/removeFromCart?id=<%= key.productId._id %>"></a></div>
                                                 </td>
                                             </tr>
                                             <%}%>
@@ -145,7 +145,7 @@
                                                         <tbody>
                                                             <tr>
                                                                 <td>SHIPPING</td>
-                                                                <td>$4.00</td>
+                                                                <td>FREE</td>
                                                             </tr>
                                                             <tr>
                                                                 <td>TAX</td>
@@ -241,7 +241,7 @@
 
     <script>
         function update(qty , id) {
-            console.log(qty + id);
+            console.log(qty , id);
         $.ajax({
           url: '/updateCart',
           type: 'POST',

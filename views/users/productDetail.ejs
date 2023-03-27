@@ -27,7 +27,7 @@
     </div>
 
     <!--====== Main App ======-->
-    <div id="app">
+    <div id="app" class="bg-white">
         <div class="app-content">
 
             <!--====== Section 1 ======-->
@@ -96,11 +96,16 @@
                                         <span class="pd-detail__discount">(76% OFF)</span><del class="pd-detail__del">$28.97</del></div>
                                 </div>
                                 <div class="u-s-m-b-15">
-                                    <div class="pd-detail__rating gl-rating-style"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
+                                    <div class="pd-detail__rating gl-rating-style">
 
+                                       
+                                       <% for( i=0;i< product.star;i++){%>
+                                        <i class="fas fa-star"></i>
+                                        <%}%>
+                                        <!-- <i class="fas fa-star-half-alt"></i> -->
                                         <span class="pd-detail__review u-s-m-l-4">
 
-                                            <a data-click-scroll="#view-review">23 Reviews</a></span></div>
+                                            <a data-click-scroll="#view-review"><%-product.Rating.length%></a></span></div>
                                 </div>
                                 <div class="u-s-m-b-15">
                                     <div class="pd-detail__inline">
@@ -117,7 +122,7 @@
 
                                         <span class="pd-detail__click-wrap"><i class="far fa-heart u-s-m-r-6"></i>
 
-                                            <a href="signin.html">Add to Wishlist</a>
+                                            <a href="/addToWishList?id=<%=product._id%>">Add to Wishlist</a>
 
                                             <span class="pd-detail__click-count">(222)</span></span></div>
                                 </div>
@@ -179,94 +184,7 @@
                 </div>
             </div>
 
-            <!--====== Product Detail Tab ======-->
-            <div class="u-s-p-y-90">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="pd-tab">
-                                <div class="u-s-m-b-30">
-                                    <ul class="nav pd-tab__list">
-                                        <li class="nav-item">
-
-                                            <a class="nav-link active" data-toggle="tab" href="#pd-desc">DESCRIPTION</a></li>
-                                       
-                                    </ul>
-                                </div>
-                                <div class="tab-content">
-                                    <div class="tab-pane fade show active" id="pd-desc">
-                                        <div class="pd-tab__desc">
-                                            <div class="u-s-m-b-15">
-                                                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
-                                            </div>
-                                            <div class="u-s-m-b-30">
-                                                <ul>
-                                                    <li><i class="fas fa-check u-s-m-r-8"></i>
-
-                                                        <span>Buyer Protection.</span></li>
-                                                    <li><i class="fas fa-check u-s-m-r-8"></i>
-
-                                                        <span>Full Refund if you don't receive your order.</span></li>
-                                                    <li><i class="fas fa-check u-s-m-r-8"></i>
-
-                                                        <span>Returns accepted if product not as described.</span></li>
-                                                </ul>
-                                            </div>
-                                            <div class="u-s-m-b-15">
-                                                <h4>PRODUCT INFORMATION</h4>
-                                            </div>
-                                            <div class="u-s-m-b-15">
-                                                <div class="pd-table gl-scroll">
-                                                    <table>
-                                                        <tbody>
-                                                            <tr>
-                                                                <td>Main Material</td>
-                                                                <td>Cotton</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>Color</td>
-                                                                <td>Green, Blue, Red</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>Sleeves</td>
-                                                                <td>Long Sleeve</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>Top Fit</td>
-                                                                <td>Regular</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>Print</td>
-                                                                <td>Not Printed</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>Neck</td>
-                                                                <td>Round Neck</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>Pieces Count</td>
-                                                                <td>1 Piece</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>Occasion</td>
-                                                                <td>Casual</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>Shipping Weight (kg)</td>
-                                                                <td>0.5</td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+           
             <!--====== End - Product Detail Tab ======-->
             
             <div class="u-s-p-b-90">
@@ -305,16 +223,14 @@
                                                 <ul class="product-o__action-list">
                                                     <li>
 
-                                                        <a data-modal="modal" data-modal-id="#quick-look" data-tooltip="tooltip" data-placement="top" title="Quick View"><i class="fas fa-search-plus"></i></a></li>
+                                                        <a href="/productDetail?id=<%-products[i]._id%>" data-modal="modal" data-modal-id="#quick-look" data-tooltip="tooltip" data-placement="top" title="Quick View"><i class="fas fa-search-plus"></i></a></li>
                                                     <li>
 
-                                                        <a data-modal="modal" data-modal-id="#add-to-cart" data-tooltip="tooltip" data-placement="top" title="Add to Cart"><i class="fas fa-plus-circle"></i></a></li>
+                                                        <a href="/addToCart?id=<%-products[i]._id%>" data-modal="modal" data-modal-id="#add-to-cart" data-tooltip="tooltip" data-placement="top" title="Add to Cart"><i class="fas fa-plus-circle"></i></a></li>
                                                     <li>
 
-                                                        <a href="signin.html" data-tooltip="tooltip" data-placement="top" title="Add to Wishlist"><i class="fas fa-heart"></i></a></li>
-                                                    <li>
-
-                                                        <a href="signin.html" data-tooltip="tooltip" data-placement="top" title="Email me When the price drops"><i class="fas fa-envelope"></i></a></li>
+                                                        <a href="/addToWishList?id=<%-products[i]._id%>" data-tooltip="tooltip" data-placement="top" title="Add to Wishlist"><i class="fas fa-heart"></i></a></li>
+                                                   
                                                 </ul>
                                             </div>
                                         </div>
@@ -326,9 +242,11 @@
                                         <span class="product-o__name">
 
                                             <a href=""><%-products[i].name%></a></span>
-                                        <div class="product-o__rating gl-rating-style"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-
-                                            <span class="product-o__review">(20)</span></div>
+                                        <div class="product-o__rating gl-rating-style">
+                                            <% for(let j=0;j< products[i].star;j++){%>
+                                            <i class="fas fa-star"></i>
+                                            <%}%>
+                                            <span class="product-m__review">(<%-products[i].Rating.length%>)</span></div>
 
                                         <span class="product-o__price">$<%-products[i].price%>.00
 

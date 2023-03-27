@@ -84,9 +84,11 @@ userSchema.methods.updateCart = async function (id,qty){
     if(qty >cart.item[index].qty ){
         cart.item[index].qty +=1
         cart.totalPrice += product.price
-    }else{
+    }else if(qty < cart.item[index].qty ){
         cart.item[index].qty -=1
         cart.totalPrice -= product.price  
+    }else{
+       
     }console.log(cart.totalPrice);
      this.save()
      return cart.totalPrice

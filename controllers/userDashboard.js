@@ -105,16 +105,21 @@ const saveAddress = async(req,res)=>{
       let{rating,_id}= req.body
       const user = req.session.user_id
       const product = await Product.findOne({_id:_id})
+      rating = parseInt(rating)
       const index = product.Rating.findIndex(obj => obj.user === user);
-  
-  if (index !== -1) {
+  if (index != -1) {
     product.Rating[index].rating = rating;
   } else {
     // if the key doesn't exist, add it to the array
-    product.Rating.push({ user, rating });
+    product.Rating.push({ user, rating }); 
   }
   console.log(product.Rating);
-  await Product.updateOne({_id:_id},{$set:{Rating:product.Rating}})
+  let sum = 0 
+  const num = parseInt(product.Rating.length)
+  product.Rating.map(x=>sum += x.rating)
+  const star = sum/num
+  console.log(star);
+  await Product.updateOne({_id:_id},{$set:{Rating:product.Rating,star:star}})
   res.send({rat:product.Rating})
   }
 
