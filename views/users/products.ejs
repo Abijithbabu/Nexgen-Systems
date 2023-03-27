@@ -51,7 +51,7 @@
                                                             <div class="rating__check-star-wrap"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
                                                         </div>
 
-                                                        <span class="shop-w__total-text">(2)</span>
+                                                        <span class="shop-w__total-text"></span>
                                                     </li>
                                                     <li>
                                                         <div class="rating__check">
@@ -62,7 +62,7 @@
                                                                 <span>& Up</span></div>
                                                         </div>
 
-                                                        <span class="shop-w__total-text">(8)</span>
+                                                        <span class="shop-w__total-text"></span>
                                                     </li>
                                                     <li>
                                                         <div class="rating__check">
@@ -73,7 +73,7 @@
                                                                 <span>& Up</span></div>
                                                         </div>
 
-                                                        <span class="shop-w__total-text">(10)</span>
+                                                        <span class="shop-w__total-text"></span>
                                                     </li>
                                                     <li>
                                                         <div class="rating__check">
@@ -84,7 +84,7 @@
                                                                 <span>& Up</span></div>
                                                         </div>
 
-                                                        <span class="shop-w__total-text">(12)</span>
+                                                        <span class="shop-w__total-text"></span>
                                                     </li>
                                                     <li>
                                                         <div class="rating__check">
@@ -95,7 +95,7 @@
                                                                 <span>& Up</span></div>
                                                         </div>
 
-                                                        <span class="shop-w__total-text">(1)</span>
+                                                        <span class="shop-w__total-text"></span>
                                                     </li>
                                                 </ul>
                                             </div>
@@ -189,9 +189,12 @@
 
                                                         <a href="product-detail.html"><%-products[i].category%></a></div>
                                                     <div class="product-m__rating gl-rating-style"> 
-                                                         <% for(let j=0;j< products[i].star;j++){%>
+                                                         <% for(let j=0;j< 5;j++){
+                                                            if(products[i].star>j){%>
                                                         <i class="fas fa-star"></i>
-                                                        <%}%>
+                                                        <%}else{%>
+                                                            <i class="far fa-star"></i>
+                                                        <%}}%>
                                                         <span class="product-m__review">(<%-products[i].Rating.length%>)</span></div>
                                                     <div  class="product-m__price">₹ <%-products[i].price%>.00</div>
                                                     <!-- <div class="product-m__hover">
@@ -303,12 +306,17 @@ for(var i = 0; i < elements.length; i++) {
                     </div>
                     <div class="product-m__rating gl-rating-style">
                         ${(() => {
-                   let stars = '';
-                   for (let j = 0; j < product.star; j++) {
-                   stars += '<i class="fas fa-star"></i>';
-                   }
-                   return stars;
-                   })()}
+  let stars = '';
+  for (let j = 0; j < 5; j++) {
+    if (product.star > j) {
+      stars += '<i class="fas fa-star"></i>';
+    } else {
+      stars += '<i class="far fa-star"></i>';
+    }
+  }
+  return stars;
+})()}
+
                    <span class="product-m__review">(${product.Rating.length})</span></div>
                     <div class="product-m__price">₹.${product.price}.00</div>
                 </div>

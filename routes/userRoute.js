@@ -39,6 +39,7 @@ user_route.post('/editUser',multer.upload.single('image'),userDashboard.editUser
 user_route.get('/orders', userDashboard.loadOrders)
 user_route.get('/orderDetails', userDashboard.loadOrderDetails)
 user_route.post('/updateRating',userDashboard.updateRating)
+user_route.post('/changeStatus',userDashboard.changeStatus)
 
 user_route.post('/updateCart',userActions.updateCart)
 user_route.get('/addToCart',userActions.addToCart)

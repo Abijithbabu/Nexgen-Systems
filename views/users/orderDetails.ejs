@@ -150,7 +150,7 @@
       if(x == 0)document.getElementById('cancel').innerHTML=`<p class="small text-danger  mb-0 top-0 left-0">*this Order has been cancelled</p>
       <br><br><br><br><br><br><br>`
       const data = {status:status,id:oId}
-  axios.post('/admin/editOrder', data)
+  axios.post('/changeStatus', data)
     .then(res => {
       if(res.data.state){   
         mesg =`<p class="text-center mb-0 text-success">Order ${status}...!</p>`

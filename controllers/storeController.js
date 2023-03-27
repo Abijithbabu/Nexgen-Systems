@@ -152,8 +152,10 @@ const loadBanner = async (req,res)=>{
       }  
       const changeStatus = async (req,res)=>{
         try {
+          console.log('hiiiiiiiiiiiiiiiiiiiiiiii');
           await Order.updateOne({_id:req.body.id},{status:req.body.status})
           const orderData =  await Order.findOne({_id:req.body.id})
+          console.log(req.body.status,orderData.payment);
           if(req.body.status=='Cancelled' && orderData.payment!='COD'){
             const userData = await User.findOne({_id:orderData.userId})
             await User.updateOne({_id:orderData.userId},{$set:{wallet:userData.wallet + orderData.amount}})

@@ -41,16 +41,16 @@
                                 <ul class="pd-breadcrumb__list">
                                     <li class="has-separator">
 
-                                        <a href="index.hml">Home</a></li>
+                                        <a href="/">Home</a></li>
                                     <li class="has-separator">
 
-                                        <a href="shop-side-version-2.html">Electronics</a></li>
+                                        <a href="/products">Products</a></li>
                                     <li class="has-separator">
 
-                                        <a href="shop-side-version-2.html">DSLR Cameras</a></li>
+                                        <a href="/products"><%-product.category%></a></li>
                                     <li class="is-marked">
 
-                                        <a href="shop-side-version-2.html">Nikon Cameras</a></li>
+                                        <a href="/productDetail?id=<%-product._id%>"><%-product.name%></a></li>
                                 </ul>
                             </div>
                             <!--====== End - Product Breadcrumb ======-->
@@ -91,7 +91,7 @@
                                 <div>
                                     <div class="pd-detail__inline">
 
-                                        <span class="pd-detail__price">$<%-product.price%>.00</span>
+                                        <span class="pd-detail__price">₹<%-product.price%>.00</span>
 
                                         <span class="pd-detail__discount">(76% OFF)</span><del class="pd-detail__del">$28.97</del></div>
                                 </div>
@@ -99,9 +99,12 @@
                                     <div class="pd-detail__rating gl-rating-style">
 
                                        
-                                       <% for( i=0;i< product.star;i++){%>
+                                        <% for(let j=0;j < 5;j++){
+                                            if(product.star>j){%>
                                         <i class="fas fa-star"></i>
-                                        <%}%>
+                                        <%}else{%>
+                                            <i class="far fa-star"></i>
+                                        <%}}%>
                                         <!-- <i class="fas fa-star-half-alt"></i> -->
                                         <span class="pd-detail__review u-s-m-l-4">
 
@@ -124,7 +127,7 @@
 
                                             <a href="/addToWishList?id=<%=product._id%>">Add to Wishlist</a>
 
-                                            <span class="pd-detail__click-count">(222)</span></span></div>
+                                            <span class="pd-detail__click-count">(22)</span></span></div>
                                 </div>
                                 <div class="u-s-m-b-15">
                                     <div class="pd-detail__inline">
@@ -243,14 +246,15 @@
 
                                             <a href=""><%-products[i].name%></a></span>
                                         <div class="product-o__rating gl-rating-style">
-                                            <% for(let j=0;j< products[i].star;j++){%>
+                                            <% for(let j=0;j< 5;j++){
+                                                if(products[i].star>j){%>
                                             <i class="fas fa-star"></i>
-                                            <%}%>
+                                            <%}else{%>
+                                                <i class="far fa-star"></i>
+                                            <%}}%>
                                             <span class="product-m__review">(<%-products[i].Rating.length%>)</span></div>
 
-                                        <span class="product-o__price">$<%-products[i].price%>.00
-
-                                            <span class="product-o__discount">$160.00</span></span>
+                                        <span class="product-o__price">₹<%-products[i].price%>.00</span>
                                     </div>
                                 </div>
                                 <%}%> 
